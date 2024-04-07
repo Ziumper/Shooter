@@ -60,6 +60,7 @@ namespace Ziumper.Shooter
                 case { phase: InputActionPhase.Canceled }:
                     //Stop Hold.
                     data.IsHoldingButtonFire = false;
+                    stateManager.StateEvents.OnSingleFireCancel.Invoke();
                     break;
             }
         }
@@ -201,7 +202,7 @@ namespace Ziumper.Shooter
                 //Performed.
                 case { phase: InputActionPhase.Performed }:
                     //Update the cursor's state.
-                    stateManager.StateEvents.OnSingleFire.Invoke();
+                    stateManager.StateEvents.OnCursorUpdate.Invoke();
                     break;
             }
         }

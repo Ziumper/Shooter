@@ -24,6 +24,7 @@ namespace Ziumper.Shooter
             public UnityEvent<int> OnFillAmmunniton;
             public UnityEvent OnEjectCasing;
             public UnityEvent OnSingleFire;
+            public UnityEvent OnSingleFireCancel;
 
             [Header("Utility Events")]
             public UnityEvent OnCursorUpdate;

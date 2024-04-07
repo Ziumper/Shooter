@@ -57,6 +57,7 @@ namespace Ziumper.Shooter
         {
             data.AudioSource.Stop();
 
+            context.StateEvents.OnSingleFire.RemoveAllListeners();
             context.StateEvents.OnInventoryNext.RemoveAllListeners();
             context.StateEvents.OnReloadStart.RemoveAllListeners();
             context.StateEvents.OnInspectStart.RemoveAllListeners();
