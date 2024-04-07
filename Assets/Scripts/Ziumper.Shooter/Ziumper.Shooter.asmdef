@@ -1,0 +1,17 @@
+{
+    "name": "Ziumper.Shooter",
+    "rootNamespace": "",
+    "references": [
+        "GUID:1e974be0ca902e345b406504f036bd37",
+        "GUID:75469ad4d38634e559750d17036d5f7c"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
