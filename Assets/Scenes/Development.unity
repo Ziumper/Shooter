@@ -8865,7 +8865,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sensitivity: {x: 1, y: 1}
   yClamp: {x: -89, y: 89}
-  smooth: 0
+  smooth: 1
   interpolationSpeed: 35
 --- !u!136 &836103655
 CapsuleCollider:
