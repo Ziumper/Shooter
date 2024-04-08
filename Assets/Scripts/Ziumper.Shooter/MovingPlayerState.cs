@@ -12,7 +12,7 @@ namespace Ziumper.Shooter
 
         protected AudioClip footstepsClip;
         protected CharacterBehaviour character;
-        protected Rigidbody rigidbody;
+        protected CharacterController controller;
 
         public override void EnterState(PlayerStateManager context, PlayerData data)
         {
@@ -28,9 +28,9 @@ namespace Ziumper.Shooter
                 character = context.GetComponent<CharacterBehaviour>();
             }
 
-            if (rigidbody == null)
+            if (controller == null)
             {
-                rigidbody = context.GetComponent<Rigidbody>();
+                controller = context.GetComponent<CharacterController>();
             }
         }
 
@@ -54,13 +54,13 @@ namespace Ziumper.Shooter
             movement *= speed;
             movement = character.transform.TransformDirection(movement);
 
-            rigidbody.velocity = movement;
+            controller.Move(movement);
         }
 
         protected void PlayFootstepSounds(AudioClip footstepClip)
         {
             //Check if we're moving on the ground. We don't need footsteps in the air.
-            if (data.IsGrounded && rigidbody.velocity.sqrMagnitude > 0.1f)
+            if (data.IsGrounded && controller.velocity.sqrMagnitude > 0.1f)
             {
                 //Select the correct audio clip to play.
                 data.AudioSource.clip = footstepClip;

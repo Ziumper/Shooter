@@ -13,6 +13,7 @@ namespace Ziumper.Shooter
             Debug.Log("Entering running state");
             base.EnterState(context, data);
             movingSpeed = data.SpeedRunning;
+            footstepsClip = data.AudioClipRunning;
             SetRunningAnimationCondition(true);
         }
 

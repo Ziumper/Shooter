@@ -2866,6 +2866,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 220244751}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &221514828 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9144016917351435942, guid: 19eadcf8fbed56b4da77ca94c1b4145f,
+    type: 3}
+  m_PrefabInstance: {fileID: 836103645}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &237763517
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8729,6 +8735,36 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 4300000, guid: b0299d1388028864e9874bcacb6c2123, type: 3}
+    - target: {fileID: 6219025921223107655, guid: 19eadcf8fbed56b4da77ca94c1b4145f,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6219025921223107655, guid: 19eadcf8fbed56b4da77ca94c1b4145f,
+        type: 3}
+      propertyPath: MinDistance
+      value: 0.8634119
+      objectReference: {fileID: 0}
+    - target: {fileID: 6219025921223107655, guid: 19eadcf8fbed56b4da77ca94c1b4145f,
+        type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6219025921223107655, guid: 19eadcf8fbed56b4da77ca94c1b4145f,
+        type: 3}
+      propertyPath: BypassReverbZones
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6311201337086346178, guid: 19eadcf8fbed56b4da77ca94c1b4145f,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7954147704929373820, guid: 19eadcf8fbed56b4da77ca94c1b4145f,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8113310418508224255, guid: 19eadcf8fbed56b4da77ca94c1b4145f,
         type: 3}
       propertyPath: 'scopeArray.Array.data[4]'
@@ -8737,6 +8773,8 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 434113066, guid: 19eadcf8fbed56b4da77ca94c1b4145f, type: 3}
     - {fileID: 448958757, guid: 19eadcf8fbed56b4da77ca94c1b4145f, type: 3}
+    - {fileID: 2780517249769709989, guid: 19eadcf8fbed56b4da77ca94c1b4145f, type: 3}
+    - {fileID: 6311201337086346178, guid: 19eadcf8fbed56b4da77ca94c1b4145f, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -8748,6 +8786,18 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1858796505}
+    - targetCorrespondingSourceObject: {fileID: 2751027687307977091, guid: 19eadcf8fbed56b4da77ca94c1b4145f,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1858796513}
+    - targetCorrespondingSourceObject: {fileID: 9144016917351435942, guid: 19eadcf8fbed56b4da77ca94c1b4145f,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 836103651}
+    - targetCorrespondingSourceObject: {fileID: 9144016917351435942, guid: 19eadcf8fbed56b4da77ca94c1b4145f,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 836103655}
   m_SourcePrefab: {fileID: 100100000, guid: 19eadcf8fbed56b4da77ca94c1b4145f, type: 3}
 --- !u!1 &836103646 stripped
 GameObject:
@@ -8799,8 +8849,47 @@ MonoBehaviour:
     CharacterAnimator: {fileID: 836103647}
     AudioClipWalking: {fileID: 8300000, guid: 74abbbf1b1724e34b894191db38e10a0, type: 3}
     AudioClipRunning: {fileID: 8300000, guid: d2add02f58e61e640aba3ae9110591cb, type: 3}
-    SpeedWalking: 4
-    SpeedRunning: 6.8
+    SpeedWalking: 0.1
+    SpeedRunning: 0.2
+--- !u!114 &836103651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 221514828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c58f7189a69df2b468ea339108be6f66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sensitivity: {x: 1, y: 1}
+  yClamp: {x: -89, y: 89}
+  smooth: 0
+  interpolationSpeed: 35
+--- !u!136 &836103655
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 221514828}
+  m_Material: {fileID: 13400000, guid: 59f700dae9067fd4a979d046ceb0ed04, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.3
+  m_Height: 1.8
+  m_Direction: 1
+  m_Center: {x: 0, y: -1, z: 0}
 --- !u!1001 &837662653
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17445,7 +17534,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 974e12a873dcfa64aaa4b0ac6234237d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WeaponEvents:
+  StateEvents:
+    OnMove:
+      m_PersistentCalls:
+        m_Calls: []
+    OnLook:
+      m_PersistentCalls:
+        m_Calls: []
     OnInspectStart:
       m_PersistentCalls:
         m_Calls: []
@@ -17458,12 +17553,56 @@ MonoBehaviour:
     OnReloadEnd:
       m_PersistentCalls:
         m_Calls: []
-    OnHolsteringStart:
+    OnInventoryNext:
       m_PersistentCalls:
         m_Calls: []
     OnHolsteringEnd:
       m_PersistentCalls:
         m_Calls: []
+    OnSetActiveMagazine:
+      m_PersistentCalls:
+        m_Calls: []
+    OnFillAmmunniton:
+      m_PersistentCalls:
+        m_Calls: []
+    OnEjectCasing:
+      m_PersistentCalls:
+        m_Calls: []
+    OnSingleFire:
+      m_PersistentCalls:
+        m_Calls: []
+    OnSingleFireCancel:
+      m_PersistentCalls:
+        m_Calls: []
+    OnCursorUpdate:
+      m_PersistentCalls:
+        m_Calls: []
+--- !u!143 &1858796513
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 836103646}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &1864567009
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,11 +14,8 @@ namespace Ziumper.Shooter
             //Cache a reference to the overlay layer's index.
             data.LayerOverlay = data.CharacterAnimator.GetLayerIndex("Layer Overlay");
 
-            data.Capsule = context.GetComponent<CapsuleCollider>();
-            
-            var rigidbody = context.GetComponent<Rigidbody>();
-            rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
-
+            data.Capsule = context.GetComponentInChildren<CapsuleCollider>();
+          
             data.AudioSource = context.GetComponent<AudioSource>();
 
             context.StateEvents.OnCursorUpdate.AddListener(() =>
