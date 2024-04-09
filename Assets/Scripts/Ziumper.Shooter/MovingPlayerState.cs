@@ -46,17 +46,18 @@ namespace Ziumper.Shooter
 
         public override void Update()
         {
-            UpdateMovementAnimatorValue();
-            context.Aiming.UpdateAimingAnimatorValue(false);
             UpdateMovement();
             CalculateJump();
+
+            UpdateMovementAnimatorValue();
+            context.Aiming.UpdateAimingAnimatorValue(false);
         }
 
         protected void UpdateMovement()
         {
             Vector2 frameInput = character.GetInputMovement();
             var movement = new Vector3(frameInput.x, 0.0f, frameInput.y);
-            movement *= movingSpeed;
+            movement *= movingSpeed * Time.deltaTime;
             movement = character.transform.TransformDirection(movement);
 
             if(data.PlayerGravity > data.GravityMin && data.JumpingForce.y < 0.1f)
@@ -76,6 +77,8 @@ namespace Ziumper.Shooter
 
             movement.y += data.PlayerGravity;
             movement += data.JumpingForce * Time.deltaTime;
+
+            Debug.Log(movement);
 
             controller.Move(movement);
 
@@ -101,8 +104,15 @@ namespace Ziumper.Shooter
 
         public void UpdateMovementAnimatorValue()
         {
+            float movementAnimator = Mathf.Clamp01(Mathf.Abs(data.AxisMovement.x) + Mathf.Abs(data.AxisMovement.y));
+
+            if(!data.IsGrounded)
+            {
+                movementAnimator = 0f;
+            }
+
             //Movement Value. This value affects absolute movement. Aiming movement uses this, as opposed to per-axis movement.
-            data.CharacterAnimator.SetFloat(HashMovement, Mathf.Clamp01(Mathf.Abs(data.AxisMovement.x) + Mathf.Abs(data.AxisMovement.y)), data.DampTimeLocomotion, Time.deltaTime);
+            data.CharacterAnimator.SetFloat(HashMovement,movementAnimator, data.DampTimeLocomotion, Time.deltaTime);
         }
 
         public override void LateUpdate()

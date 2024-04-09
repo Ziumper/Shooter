@@ -8854,14 +8854,12 @@ MonoBehaviour:
     CharacterAnimator: {fileID: 836103647}
     AudioClipWalking: {fileID: 8300000, guid: 74abbbf1b1724e34b894191db38e10a0, type: 3}
     AudioClipRunning: {fileID: 8300000, guid: d2add02f58e61e640aba3ae9110591cb, type: 3}
-    SpeedWalking: 0.1
-    SpeedRunning: 0.2
+    SpeedWalking: 4
+    SpeedRunning: 8
     GravityAmount: 0.3
     GravityMin: -3
-    JumpingHeight: 10
-    JumpingFalloff: 0.1
-    JumpingForce: {x: 0, y: 0, z: 0}
-    JumpingVelocity: {x: 0, y: 0, z: 0}
+    JumpingHeight: 20
+    JumpingFalloff: 0.15
 --- !u!114 &836103651
 MonoBehaviour:
   m_ObjectHideFlags: 0

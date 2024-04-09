@@ -26,6 +26,7 @@ namespace Ziumper.Shooter
         public override void Update()
         {
             base.Update();
+
             Vector2 frameInput = character.GetInputMovement();
             bool isNoInput = frameInput.x == 0 && frameInput.y == 0;
             if ((!data.IsHoldingButtonRun || isNoInput) && data.IsGrounded)
@@ -33,7 +34,7 @@ namespace Ziumper.Shooter
                 context.ChangeStateTo(context.Default, data);
                 return;
             }
-
+            
             SetRunningAnimationCondition(data.IsGrounded);
         }
 

@@ -44,9 +44,10 @@ namespace Ziumper.Shooter
 
         [Header("Jumping")]
         public float JumpingHeight;
+        [Tooltip("Falloff speed dump, how fast player should start fall of")]
         public float JumpingFalloff;
-        public Vector3 JumpingForce;
-        public Vector3 JumpingVelocity;
+        public Vector3 JumpingForce { get; set; }
+        [NonSerialized] public Vector3 JumpingVelocity;
       
        
 
