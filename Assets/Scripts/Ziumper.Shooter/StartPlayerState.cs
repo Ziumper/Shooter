@@ -13,9 +13,6 @@ namespace Ziumper.Shooter
             data.LayerActions = data.CharacterAnimator.GetLayerIndex("Layer Actions");
             //Cache a reference to the overlay layer's index.
             data.LayerOverlay = data.CharacterAnimator.GetLayerIndex("Layer Overlay");
-
-            data.Capsule = context.GetComponentInChildren<CapsuleCollider>();
-          
             data.AudioSource = context.GetComponent<AudioSource>();
 
             context.StateEvents.OnCursorUpdate.AddListener(() =>

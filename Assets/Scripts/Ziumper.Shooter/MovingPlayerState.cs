@@ -1,4 +1,5 @@
 ﻿using InfimaGames.LowPolyShooterPack;
+using System;
 using System.Linq;
 using UnityEngine;
 
@@ -8,7 +9,6 @@ namespace Ziumper.Shooter
     {
         protected static readonly int HashMovement = Animator.StringToHash("Movement");
         protected float movingSpeed;
-        private readonly RaycastHit[] groundHits = new RaycastHit[8];
 
         protected AudioClip footstepsClip;
         protected CharacterBehaviour character;
@@ -32,29 +32,55 @@ namespace Ziumper.Shooter
             {
                 controller = context.GetComponent<CharacterController>();
             }
+
+            context.StateEvents.OnJump.AddListener(Jump);
+        }
+
+        protected virtual void Jump()
+        {
+            if (data.IsGrounded)
+            {
+                data.JumpingForce = Vector3.up * data.JumpingHeight;
+            }
         }
 
         public override void Update()
         {
             UpdateMovementAnimatorValue();
             context.Aiming.UpdateAimingAnimatorValue(false);
-            PlayFootstepSounds(footstepsClip);
+            UpdateMovement();
+            CalculateJump();
         }
 
-        public override void FixedUpdate()
+        protected void UpdateMovement()
         {
             Vector2 frameInput = character.GetInputMovement();
-            UpdateMovement(frameInput, movingSpeed);
-            data.IsGrounded = true;
-        }
-
-        protected void UpdateMovement(Vector2 frameInput, float speed)
-        {
             var movement = new Vector3(frameInput.x, 0.0f, frameInput.y);
-            movement *= speed;
+            movement *= movingSpeed;
             movement = character.transform.TransformDirection(movement);
 
+            if(data.PlayerGravity > data.GravityMin && data.JumpingForce.y < 0.1f)
+            {
+                data.PlayerGravity -= data.GravityAmount * Time.deltaTime; 
+            }
+
+            if(data.PlayerGravity < -1 && controller.isGrounded)
+            {
+                data.PlayerGravity = -1;
+            }
+
+            if(data.JumpingForce.y > 0.1f)
+            {
+                data.PlayerGravity = 0;
+            }
+
+            movement.y += data.PlayerGravity;
+            movement += data.JumpingForce * Time.deltaTime;
+
             controller.Move(movement);
+
+            data.IsGrounded = controller.isGrounded;
+            PlayFootstepSounds(footstepsClip);
         }
 
         protected void PlayFootstepSounds(AudioClip footstepClip)
@@ -79,31 +105,6 @@ namespace Ziumper.Shooter
             data.CharacterAnimator.SetFloat(HashMovement, Mathf.Clamp01(Mathf.Abs(data.AxisMovement.x) + Mathf.Abs(data.AxisMovement.y)), data.DampTimeLocomotion, Time.deltaTime);
         }
 
-        public override void OnCollisitonStay()
-        {
-            //Bounds.
-            Bounds bounds = data.Capsule.bounds;
-            //Extents.
-            Vector3 extents = bounds.extents;
-            //Radius.
-            float radius = extents.x - 0.01f;
-
-            //Cast. This checks whether there is indeed ground, or not.
-            Physics.SphereCastNonAlloc(bounds.center, radius, Vector3.down,
-                groundHits, extents.y - radius * 0.5f, ~0, QueryTriggerInteraction.Ignore);
-
-            //We can ignore the rest if we don't have any proper hits.
-            if (!groundHits.Any(hit => hit.collider != null && hit.collider != data.Capsule))
-                return;
-
-            //Store RaycastHits.
-            for (var i = 0; i < groundHits.Length; i++)
-                groundHits[i] = new RaycastHit();
-
-            //Set grounded. Now we know for sure that we're grounded.
-            data.IsGrounded = true;
-        }
-
         public override void LateUpdate()
         {
             //We need a weapon for this!
@@ -122,7 +123,16 @@ namespace Ziumper.Shooter
             }
         }
 
-        
+        public override void ExitState()
+        {
+            context.StateEvents.OnJump.RemoveAllListeners();
+        }
+
+        protected virtual void CalculateJump()
+        {
+            data.JumpingForce = Vector3.SmoothDamp(data.JumpingForce, Vector3.zero, ref data.JumpingVelocity, data.JumpingFalloff);
+        }
+
     }
 
 }

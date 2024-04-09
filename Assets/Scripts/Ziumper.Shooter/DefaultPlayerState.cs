@@ -28,6 +28,7 @@ namespace Ziumper.Shooter
             context.StateEvents.OnReloadStart.AddListener(() => context.ChangeStateTo(context.Reloading, data));
             context.StateEvents.OnInspectStart.AddListener(() => context.ChangeStateTo(context.Inspecting, data));
             context.StateEvents.OnSingleFire.AddListener(() => context.ChangeStateTo(context.Firing, data));
+         
         }
 
         public override void Update()
@@ -51,12 +52,13 @@ namespace Ziumper.Shooter
             {
                 context.ChangeStateTo(context.Firing, data);
             }
+
+            CalculateJump();
         }
 
         public override void ExitState()
         {
-            data.AudioSource.Stop();
-
+            base.ExitState();
             context.StateEvents.OnSingleFire.RemoveAllListeners();
             context.StateEvents.OnInventoryNext.RemoveAllListeners();
             context.StateEvents.OnReloadStart.RemoveAllListeners();

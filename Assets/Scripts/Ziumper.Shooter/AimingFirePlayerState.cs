@@ -14,6 +14,8 @@
                     context.ChangeStateTo(context.Aiming, data);
                 });
             }
+
+            context.StateEvents.OnJump.RemoveAllListeners();
         }
 
         public override void Update()
@@ -24,7 +26,7 @@
                 {
                     context.Firing.FireSingle();
                     context.Aiming.UpdateAiming(true);
-                    PlayFootstepSounds(data.AudioClipWalking);
+                    UpdateMovement();
                 }
                 else
                 {

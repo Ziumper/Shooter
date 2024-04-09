@@ -25,6 +25,8 @@ namespace Ziumper.Shooter
 
         public override void Update()
         {
+            base.Update();
+
             if(data.EquippedWeapon.IsAutomatic())
             {
                 if (data.IsHoldingButtonFire)

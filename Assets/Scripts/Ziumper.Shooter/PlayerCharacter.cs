@@ -224,6 +224,19 @@ namespace Ziumper.Shooter
             stateManager.StateEvents.OnLook.Invoke(context.ReadValue<Vector2>());
         }
 
+        public void OnJump(InputAction.CallbackContext context)
+        {
+            //Switch.
+            switch (context)
+            {
+                //Performed.
+                case { phase: InputActionPhase.Performed }:
+                    //Update the cursor's state.
+                    stateManager.StateEvents.OnJump.Invoke();
+                    break;
+            }
+        }
+
         public override void EjectCasing()
         {
             //Notify the weapon.

@@ -12,6 +12,7 @@ namespace Ziumper.Shooter
             [Header("Moving Events")]
             public UnityEvent<Vector2> OnMove;
             public UnityEvent<Vector2> OnLook;
+            public UnityEvent OnJump;
 
             [Header("Weapon Events")]
             public UnityEvent OnInspectStart;
@@ -64,11 +65,6 @@ namespace Ziumper.Shooter
         private void LateUpdate()
         {
             state.LateUpdate();
-        }
-
-        private void OnCollisionStay()
-        {
-            state.OnCollisitonStay();
         }
 
         private void FixedUpdate()

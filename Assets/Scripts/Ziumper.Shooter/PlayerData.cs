@@ -11,10 +11,10 @@ namespace Ziumper.Shooter
         public InventoryBehaviour Inventory;
         [Header("Cameras")]
         [Tooltip("Normal Camera")]
-        [SerializeField] public Camera CameraWorld;
+        public Camera CameraWorld;
 
         [Tooltip("Determines how smooth the locomotion blendspace is.")]
-        [SerializeField] public float DampTimeLocomotion;
+        public float DampTimeLocomotion;
 
         [Tooltip("How smoothly we play aiming transitions. Beware that this affects lots of things!")]
         public float DampTimeAiming;
@@ -26,20 +26,29 @@ namespace Ziumper.Shooter
         [Header("Audio Clips")]
 
         [Tooltip("The audio clip that is played while walking.")]
-        [SerializeField]
         public AudioClip AudioClipWalking;
 
         [Tooltip("The audio clip that is played while running.")]
-        [SerializeField]
         public AudioClip AudioClipRunning;
 
         [Header("Speeds")]
-
-        [SerializeField]
-        public float SpeedWalking = 5.0f;
+        public float SpeedWalking = 0.05f;
 
         [Tooltip("How fast the player moves while running."), SerializeField]
-        public float SpeedRunning = 9.0f;
+        public float SpeedRunning = 0.15f;
+
+        [Header("Gravity")]
+        public float GravityAmount = 0.1f;
+        public float GravityMin = -3;
+        public float PlayerGravity { get; set; }
+
+        [Header("Jumping")]
+        public float JumpingHeight;
+        public float JumpingFalloff;
+        public Vector3 JumpingForce;
+        public Vector3 JumpingVelocity;
+      
+       
 
         public bool CursorsLocked { get; set; }
 
@@ -49,9 +58,6 @@ namespace Ziumper.Shooter
         public bool IsHoldingButtonFire { get; set; }
         public Vector2 AxisMovement { get; set; }
         public Vector2 AxisLook { get; set; }
-
-        public CapsuleCollider Capsule { get; set; }
-
         public AudioSource AudioSource { get; set; }
         public CharacterKinematics CharacterKinematics { get; set; }
 

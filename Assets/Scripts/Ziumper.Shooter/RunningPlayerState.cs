@@ -28,11 +28,13 @@ namespace Ziumper.Shooter
             base.Update();
             Vector2 frameInput = character.GetInputMovement();
             bool isNoInput = frameInput.x == 0 && frameInput.y == 0;
-            if (!data.IsHoldingButtonRun || isNoInput)
+            if ((!data.IsHoldingButtonRun || isNoInput) && data.IsGrounded)
             {
                 context.ChangeStateTo(context.Default, data);
                 return;
             }
+
+            SetRunningAnimationCondition(data.IsGrounded);
         }
 
      
