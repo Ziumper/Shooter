@@ -17,6 +17,7 @@ namespace Ziumper.Shooter
 
             context.Firing.Data = data;
             context.Aiming.Data = data;
+            context.Running.Data = data;
 
             context.Firing.RefreshWeaponSetup();
         }

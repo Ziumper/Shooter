@@ -9,6 +9,8 @@ namespace Ziumper.Shooter
     {
         protected static readonly int HashMovement = Animator.StringToHash("Movement");
         protected float movingSpeed;
+        protected float moveJumpValue;
+        protected bool jumped;
 
         protected AudioClip footstepsClip;
         protected CharacterBehaviour character;
@@ -40,6 +42,8 @@ namespace Ziumper.Shooter
         {
             if (data.IsGrounded)
             {
+                Vector2 frameInput = character.GetInputMovement();
+                moveJumpValue = frameInput.y;
                 data.JumpingForce = Vector3.up * data.JumpingHeight;
             }
         }
@@ -56,9 +60,17 @@ namespace Ziumper.Shooter
         protected void UpdateMovement()
         {
             Vector2 frameInput = character.GetInputMovement();
+
             var movement = new Vector3(frameInput.x, 0.0f, frameInput.y);
+            if (!data.IsGrounded)
+            {
+                movement.z = moveJumpValue;
+            } 
+            
             movement *= movingSpeed * Time.deltaTime;
             movement = character.transform.TransformDirection(movement);
+
+          
 
             if(data.PlayerGravity > data.GravityMin && data.JumpingForce.y < 0.1f)
             {
@@ -77,8 +89,6 @@ namespace Ziumper.Shooter
 
             movement.y += data.PlayerGravity;
             movement += data.JumpingForce * Time.deltaTime;
-
-            Debug.Log(movement);
 
             controller.Move(movement);
 

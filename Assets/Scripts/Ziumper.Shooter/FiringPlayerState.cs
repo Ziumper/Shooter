@@ -67,6 +67,12 @@ namespace Ziumper.Shooter
             data.CharacterAnimator.CrossFade(fireStateName, 0.05f, data.LayerOverlay, 0);
         }
 
+        public override void ExitState()
+        {
+            base.ExitState();
+            context.StateEvents.OnSingleFireCancel.RemoveAllListeners();
+        }
+
         public void FireEmpty()
         {
             /*

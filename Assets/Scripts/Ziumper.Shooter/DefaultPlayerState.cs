@@ -27,8 +27,13 @@ namespace Ziumper.Shooter
 
             context.StateEvents.OnReloadStart.AddListener(() => context.ChangeStateTo(context.Reloading, data));
             context.StateEvents.OnInspectStart.AddListener(() => context.ChangeStateTo(context.Inspecting, data));
-            context.StateEvents.OnSingleFire.AddListener(() => context.ChangeStateTo(context.Firing, data));
+            context.StateEvents.OnSingleFire.AddListener(ChangeToFire);
          
+        }
+
+        private void ChangeToFire()
+        {
+            context.ChangeStateTo(context.Firing, data);
         }
 
         public override void Update()
@@ -40,9 +45,8 @@ namespace Ziumper.Shooter
                 context.ChangeStateTo(context.Aiming, data);
                 return;
             }
-
-            bool isMovingSideWays = data.AxisMovement.y <= 0 || Math.Abs(Mathf.Abs(data.AxisMovement.x) - 1) < 0.01f;
-            if (data.IsHoldingButtonRun && !isMovingSideWays)
+          
+            if (data.IsHoldingButtonRun && !context.Running.IsMovingSideWays())
             {
                 context.ChangeStateTo(context.Running, data);
                 return;

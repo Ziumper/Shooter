@@ -1,4 +1,5 @@
 ﻿using InfimaGames.LowPolyShooterPack;
+using System;
 using System.Data.Common;
 using UnityEngine;
 
@@ -25,17 +26,24 @@ namespace Ziumper.Shooter
 
         public override void Update()
         {
-            base.Update();
-
-            Vector2 frameInput = character.GetInputMovement();
-            bool isNoInput = frameInput.x == 0 && frameInput.y == 0;
-            if ((!data.IsHoldingButtonRun || isNoInput) && data.IsGrounded)
+            if (data.IsGrounded)
             {
-                context.ChangeStateTo(context.Default, data);
-                return;
+                Vector2 frameInput = character.GetInputMovement();
+                bool isNoInput = frameInput.x == 0 && frameInput.y == 0;
+                if (!data.IsHoldingButtonRun || isNoInput || IsMovingSideWays())
+                {
+                    context.ChangeStateTo(context.Default, data);
+                    return;
+                }
             }
-            
+
+            base.Update();
             SetRunningAnimationCondition(data.IsGrounded);
+        }
+
+        public bool IsMovingSideWays()
+        {
+            return data.AxisMovement.y <= 0 || Math.Abs(Mathf.Abs(data.AxisMovement.x) - 1) < 0.01f;
         }
 
      
