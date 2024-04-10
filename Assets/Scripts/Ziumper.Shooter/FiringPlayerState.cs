@@ -10,7 +10,7 @@ namespace Ziumper.Shooter
         public override void EnterState(PlayerStateManager context, PlayerData data)
         {
             base.EnterState(context, data);
-            Debug.Log("Entering single");
+        
             if(!data.EquippedWeapon.IsAutomatic()) 
             {
                 FireSingle();
@@ -18,7 +18,7 @@ namespace Ziumper.Shooter
                 context.PlayerEvents.OnSingleFireCancel.AddListener(() => 
                 {
                     context.PlayerEvents.OnSingleFire.RemoveAllListeners();
-                    context.ChangeStateTo(context.PreviousState, data);
+                    context.ChangeStateTo(context.PlayerStates.Default, data);
                 });
             }
         }
@@ -61,9 +61,10 @@ namespace Ziumper.Shooter
                 }
             }
             //Fire Empty.
-            else
+            else if (HasFireRatePassed())
             {
                 FireEmpty();
+                context.ChangeStateTo(context.PlayerStates.Reloading, data);
             }
         }
 
