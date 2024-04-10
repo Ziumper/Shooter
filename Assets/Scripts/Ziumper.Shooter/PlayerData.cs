@@ -14,12 +14,24 @@ namespace Ziumper.Shooter
             public bool IsHoldingButtonFire;
             public Vector2 AxisMovement;
             public Vector2 AxisLook;
-            public float MovedJumpValue;
         }
+
+        public class MovingData
+        {
+            public float CurrentSpeed;
+            public float JumpDirectionValue;
+            public AudioClip FootstepsAudio;
+            public Vector3 JumpingForce;
+            public Vector3 JumpingVelocity;
+        }
+
+        public InputData Input;
+        public MovingData Move;
 
         public PlayerData()
         {
             Input = new InputData();
+            Move = new MovingData();
         }
 
         [Header("Inventory")]
@@ -61,10 +73,7 @@ namespace Ziumper.Shooter
         public float JumpingHeight;
         [Tooltip("Falloff speed dump, how fast player should start fall of")]
         public float JumpingFalloff;
-        public Vector3 JumpingForce { get; set; }
-        [NonSerialized] public Vector3 JumpingVelocity;
-
-        public InputData Input;
+        
         public bool CursorsLocked { get; set; }
 
         public AudioSource AudioSource { get; set; }

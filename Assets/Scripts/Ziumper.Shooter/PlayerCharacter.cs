@@ -12,12 +12,12 @@ namespace Ziumper.Shooter
         protected override void Awake()
         {
             stateManager = GetComponent<PlayerStateManager>();
-            stateManager.ChangeStateTo(stateManager.Awake, data);
+            stateManager.ChangeStateTo(stateManager.States.Awake, data);
         }
 
         protected override void Start()
         {
-            stateManager.ChangeStateTo(stateManager.Start, data);
+            stateManager.ChangeStateTo(stateManager.States.Start, data);
         }
 
         public override Camera GetCameraWorld() => data.CameraWorld;
@@ -54,13 +54,13 @@ namespace Ziumper.Shooter
                     break;
                 //Performed.
                 case { phase: InputActionPhase.Performed }:
-                    stateManager.StateEvents.OnSingleFire.Invoke();
+                    stateManager.PlayerEvents.OnSingleFire.Invoke();
                     break;
                 //Canceled.
                 case { phase: InputActionPhase.Canceled }:
                     //Stop Hold.
                     data.Input.IsHoldingButtonFire = false;
-                    stateManager.StateEvents.OnSingleFireCancel.Invoke();
+                    stateManager.PlayerEvents.OnSingleFireCancel.Invoke();
                     break;
             }
         }
@@ -79,7 +79,7 @@ namespace Ziumper.Shooter
                 //Performed.
                 case { phase: InputActionPhase.Performed }:
                     //Play Animation.
-                    stateManager.StateEvents.OnReloadStart.Invoke();                    
+                    stateManager.PlayerEvents.OnReloadStart.Invoke();                    
                     break;
             }
         }
@@ -100,7 +100,7 @@ namespace Ziumper.Shooter
                 //Performed.
                 case { phase: InputActionPhase.Performed }:
                     //Play Animation.
-                    stateManager.StateEvents.OnInspectStart.Invoke();
+                    stateManager.PlayerEvents.OnInspectStart.Invoke();
                     break;
             }
         }
@@ -189,7 +189,7 @@ namespace Ziumper.Shooter
                 //Performed.
                 case { phase: InputActionPhase.Performed }:
                     float scrollValue = context.valueType.IsEquivalentTo(typeof(Vector2)) ? Mathf.Sign(context.ReadValue<Vector2>().y) : 1.0f;
-                    stateManager.StateEvents.OnInventoryNext.Invoke(scrollValue);
+                    stateManager.PlayerEvents.OnInventoryNext.Invoke(scrollValue);
                     break;
             }
         }
@@ -202,7 +202,7 @@ namespace Ziumper.Shooter
                 //Performed.
                 case { phase: InputActionPhase.Performed }:
                     //Update the cursor's state.
-                    stateManager.StateEvents.OnCursorUpdate.Invoke();
+                    stateManager.PlayerEvents.OnCursorUpdate.Invoke();
                     break;
             }
         }
@@ -213,7 +213,7 @@ namespace Ziumper.Shooter
         public void OnMove(InputAction.CallbackContext context)
         {
             //Read.
-            stateManager.StateEvents.OnMove.Invoke(context.ReadValue<Vector2>());
+            stateManager.PlayerEvents.OnMove.Invoke(context.ReadValue<Vector2>());
         }
         /// <summary>
         /// Look.
@@ -221,7 +221,7 @@ namespace Ziumper.Shooter
         public void OnLook(InputAction.CallbackContext context)
         {
             //Read.
-            stateManager.StateEvents.OnLook.Invoke(context.ReadValue<Vector2>());
+            stateManager.PlayerEvents.OnLook.Invoke(context.ReadValue<Vector2>());
         }
 
         public void OnJump(InputAction.CallbackContext context)
@@ -232,7 +232,7 @@ namespace Ziumper.Shooter
                 //Performed.
                 case { phase: InputActionPhase.Performed }:
                     //Update the cursor's state.
-                    stateManager.StateEvents.OnJump.Invoke();
+                    stateManager.PlayerEvents.OnJump.Invoke();
                     break;
             }
         }
@@ -242,7 +242,7 @@ namespace Ziumper.Shooter
             //Notify the weapon.
             if (data.EquippedWeapon != null)
             {
-                stateManager.StateEvents.OnEjectCasing.Invoke();
+                stateManager.PlayerEvents.OnEjectCasing.Invoke();
             }
         }
 
@@ -251,27 +251,27 @@ namespace Ziumper.Shooter
             //Notify the weapon to fill the ammunition by the amount.
             if (data.EquippedWeapon != null)
             {
-                stateManager.StateEvents.OnFillAmmunniton.Invoke(amount);
+                stateManager.PlayerEvents.OnFillAmmunniton.Invoke(amount);
             }
         }
 
         public override void SetActiveMagazine(int active)
         {
-            stateManager.StateEvents.OnSetActiveMagazine.Invoke(active);
+            stateManager.PlayerEvents.OnSetActiveMagazine.Invoke(active);
         }
 
         public override void AnimationEndedReload()
         {
-            stateManager.StateEvents.OnReloadEnd.Invoke();
+            stateManager.PlayerEvents.OnReloadEnd.Invoke();
         }
 
         public override void AnimationEndedInspect()
         {
-            stateManager.StateEvents.OnInspectEnd.Invoke();
+            stateManager.PlayerEvents.OnInspectEnd.Invoke();
         }
         public override void AnimationEndedHolster()
         {
-            stateManager.StateEvents.OnHolsteringEnd.Invoke();
+            stateManager.PlayerEvents.OnHolsteringEnd.Invoke();
         }
 
         

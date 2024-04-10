@@ -17,13 +17,13 @@ namespace Ziumper.Shooter
 
             //Reload.
             data.EquippedWeapon.Reload();
-            context.StateEvents.OnReloadEnd.AddListener(OnReloadEnd);
+            context.PlayerEvents.OnReloadEnd.AddListener(OnReloadEnd);
         }
 
         private void OnReloadEnd()
         {
-            context.StateEvents.OnReloadEnd.RemoveListener(OnReloadEnd);
-            context.ChangeStateTo(context.Default, data);
+            context.PlayerEvents.OnReloadEnd.RemoveListener(OnReloadEnd);
+            context.ChangeStateTo(context.States.Default, data);
         }
     }
 

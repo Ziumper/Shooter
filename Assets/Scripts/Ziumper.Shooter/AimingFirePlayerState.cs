@@ -7,15 +7,15 @@
             base.EnterState(context, data);
             if (!data.EquippedWeapon.IsAutomatic())
             {
-                context.Firing.FireSingle();
-                context.StateEvents.OnSingleFireCancel.AddListener(() =>
+                context.States.Firing.FireSingle();
+                context.PlayerEvents.OnSingleFireCancel.AddListener(() =>
                 {
-                    context.StateEvents.OnSingleFire.RemoveAllListeners();
-                    context.ChangeStateTo(context.Aiming, data);
+                    context.PlayerEvents.OnSingleFire.RemoveAllListeners();
+                    context.ChangeStateTo(context.States.Aiming, data);
                 });
             }
 
-            context.StateEvents.OnJump.RemoveAllListeners();
+            context.PlayerEvents.OnJump.RemoveAllListeners();
         }
 
         public override void Update()
@@ -24,17 +24,15 @@
             {
                 if (data.Input.IsHoldingButtonFire && data.Input.IsHoldingButtonAim)
                 {
-                    context.Firing.FireSingle();
-                    context.Aiming.UpdateAiming(true);
+                    context.States.Firing.FireSingle();
+                    context.States.Aiming.UpdateAiming(true);
                     UpdateMovement();
                 }
                 else
                 {
-                    context.ChangeStateTo(context.Aiming, data);
+                    context.ChangeStateTo(context.States.Aiming, data);
                 }
             }
-
-           
         }
     }
 

@@ -13,8 +13,8 @@ namespace Ziumper.Shooter
         {
             Debug.Log("Entering running state");
             base.EnterState(context, data);
-            movingSpeed = data.SpeedRunning;
-            footstepsClip = data.AudioClipRunning;
+            data.Move.CurrentSpeed = data.SpeedRunning;
+            data.Move.FootstepsAudio = data.AudioClipRunning;
             SetRunningAnimationCondition(true);
         }
 
@@ -29,12 +29,13 @@ namespace Ziumper.Shooter
             base.Update();
             Vector2 frameInput = character.GetInputMovement();
             bool isNoInput = frameInput.x == 0 && frameInput.y == 0;
-            
-            if ((!data.Input.IsHoldingButtonRun || isNoInput || IsMovingSideWays()) && data.IsGrounded)
+            bool shouldChangeToDefault = (!data.Input.IsHoldingButtonRun || isNoInput || IsMovingSideWays()) && data.IsGrounded;
+            if (shouldChangeToDefault)
             {
-                context.ChangeStateTo(context.Default, data);
+                context.ChangeStateTo(context.States.Default, data);
                 return;
             }
+
 
             SetRunningAnimationCondition(data.IsGrounded);
         }

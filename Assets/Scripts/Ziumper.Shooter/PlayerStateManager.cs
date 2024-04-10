@@ -6,70 +6,73 @@ namespace Ziumper.Shooter
 {
     public class PlayerStateManager : MonoBehaviour
     {
-        [Serializable]
         public class PlayerStateEvents
         {
-            [Header("Moving Events")]
-            public UnityEvent<Vector2> OnMove;
-            public UnityEvent<Vector2> OnLook;
-            public UnityEvent OnJump;
+            public UnityEvent<Vector2> OnMove = new();
+            public UnityEvent<Vector2> OnLook = new();
+            public UnityEvent OnJump = new();
 
-            [Header("Weapon Events")]
-            public UnityEvent OnInspectStart;
-            public UnityEvent OnInspectEnd;
-            public UnityEvent OnReloadStart;
-            public UnityEvent OnReloadEnd;
-            public UnityEvent<float> OnInventoryNext;
-            public UnityEvent OnHolsteringEnd;
-            public UnityEvent<int> OnSetActiveMagazine;
-            public UnityEvent<int> OnFillAmmunniton;
-            public UnityEvent OnEjectCasing;
-            public UnityEvent OnSingleFire;
-            public UnityEvent OnSingleFireCancel;
+            public UnityEvent OnInspectStart = new();
+            public UnityEvent OnInspectEnd = new();
+            public UnityEvent OnReloadStart = new();
+            public UnityEvent OnReloadEnd = new();
+            public UnityEvent<float> OnInventoryNext = new();
+            public UnityEvent OnHolsteringEnd = new();
+            public UnityEvent<int> OnSetActiveMagazine = new();
+            public UnityEvent<int> OnFillAmmunniton = new();
+            public UnityEvent OnEjectCasing = new();
+            public UnityEvent OnSingleFire = new();
+            public UnityEvent OnSingleFireCancel = new();
 
-            [Header("Utility Events")]
-            public UnityEvent OnCursorUpdate;
+            public UnityEvent OnCursorUpdate = new();
         }
 
-        public PlayerStateEvents StateEvents;
-
-        public StartPlayerState Start = new();
-        public AwakePlayerState Awake = new();
-        public DefaultPlayerState Default = new();
-        public RunningPlayerState Running = new();
-        public AimingPlayerState Aiming = new();
-        public InspectingPlayerState Inspecting = new();
-        public InventoryNextPlayerState Holstering = new();
-        public ReloadingPlayerState Reloading = new();
-        public FiringPlayerState Firing = new();
-        public AimingFirePlayerState AimingFire = new();
-
-        private PlayerState state;
-        private PlayerData data;
-
-        public void ChangeStateTo(PlayerState state, PlayerData data)
+        public class StatesContainer
         {
-            this.data = data;
+            public StartPlayerState Start = new();
+            public AwakePlayerState Awake = new();
+            public DefaultPlayerState Default = new();
+            public RunningPlayerState Running = new();
+            public AimingPlayerState Aiming = new();
+            public InspectingPlayerState Inspecting = new();
+            public InventoryNextPlayerState NextWeapon = new();
+            public ReloadingPlayerState Reloading = new();
+            public FiringPlayerState Firing = new();
+            public AimingFirePlayerState AimingFire = new();
+        }
 
-            if (this.state != null) { this.state.ExitState(); }
+        private PlayerState current;
+        private PlayerState previous;
+
+        public PlayerState Current { get { return current; } }
+        public PlayerState Previous { get { return previous; } }
+
+        public PlayerStateEvents PlayerEvents = new PlayerStateEvents();
+        public StatesContainer States = new StatesContainer();
+        
+        public void ChangeStateTo(PlayerState newState, PlayerData data)
+        {
+            if (current != null) { current.ExitState(); }
             
-            this.state = state;
-            this.state.EnterState(this, this.data);
+            previous = current;
+            current = newState;
+
+            current.EnterState(this, data);
         }
         
         private void Update()
         {
-            state.Update();
+            current.Update();
         }
 
         private void LateUpdate()
         {
-            state.LateUpdate();
+            current.LateUpdate();
         }
 
         private void FixedUpdate()
         {
-            state.FixedUpdate();
+            current.FixedUpdate();
         }
     }
 

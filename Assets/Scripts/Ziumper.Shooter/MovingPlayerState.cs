@@ -8,10 +8,6 @@ namespace Ziumper.Shooter
     public abstract class MovingPlayerState : PlayerState
     {
         protected static readonly int HashMovement = Animator.StringToHash("Movement");
-        protected float movingSpeed;
-        protected bool jumped;
-
-        protected AudioClip footstepsClip;
         protected CharacterBehaviour character;
         protected CharacterController controller;
 
@@ -20,8 +16,8 @@ namespace Ziumper.Shooter
             base.EnterState(context, data);
 
             //set up defaults
-            movingSpeed = data.SpeedWalking;
-            footstepsClip = data.AudioClipWalking;
+            data.Move.CurrentSpeed = data.SpeedWalking;
+            data.Move.FootstepsAudio = data.AudioClipWalking;
 
             //cache 
             if (character == null)
@@ -34,7 +30,7 @@ namespace Ziumper.Shooter
                 controller = context.GetComponent<CharacterController>();
             }
 
-            context.StateEvents.OnJump.AddListener(Jump);
+            context.PlayerEvents.OnJump.AddListener(Jump);
         }
 
         protected virtual void Jump()
@@ -42,8 +38,8 @@ namespace Ziumper.Shooter
             if (data.IsGrounded)
             {
                 Vector2 frameInput = character.GetInputMovement();
-                data.Input.MovedJumpValue = frameInput.y;
-                data.JumpingForce = Vector3.up * data.JumpingHeight;
+                data.Move.JumpDirectionValue = frameInput.y;
+                data.Move.JumpingForce = Vector3.up * data.JumpingHeight;
             }
         }
 
@@ -53,7 +49,7 @@ namespace Ziumper.Shooter
             CalculateJump();
 
             UpdateMovementAnimatorValue();
-            context.Aiming.UpdateAimingAnimatorValue(false);
+            context.States.Aiming.UpdateAimingAnimatorValue(false);
         }
 
         protected void UpdateMovement()
@@ -63,15 +59,15 @@ namespace Ziumper.Shooter
             var movement = new Vector3(frameInput.x, 0.0f, frameInput.y);
             if (!data.IsGrounded)
             {
-                movement.z = data.Input.MovedJumpValue;
+                movement.z = data.Move.JumpDirectionValue;
             } 
             
-            movement *= movingSpeed * Time.deltaTime;
+            movement *= data.Move.CurrentSpeed * Time.deltaTime;
             movement = character.transform.TransformDirection(movement);
 
           
 
-            if(data.PlayerGravity > data.GravityMin && data.JumpingForce.y < 0.1f)
+            if(data.PlayerGravity > data.GravityMin && data.Move.JumpingForce.y < 0.1f)
             {
                 data.PlayerGravity -= data.GravityAmount * Time.deltaTime; 
             }
@@ -81,27 +77,27 @@ namespace Ziumper.Shooter
                 data.PlayerGravity = -1;
             }
 
-            if(data.JumpingForce.y > 0.1f)
+            if(data.Move.JumpingForce.y > 0.1f)
             {
                 data.PlayerGravity = 0;
             }
 
             movement.y += data.PlayerGravity;
-            movement += data.JumpingForce * Time.deltaTime;
+            movement += data.Move.JumpingForce * Time.deltaTime;
 
             controller.Move(movement);
 
             data.IsGrounded = controller.isGrounded;
-            PlayFootstepSounds(footstepsClip);
+            PlayFootstepSounds();
         }
 
-        protected void PlayFootstepSounds(AudioClip footstepClip)
+        protected void PlayFootstepSounds()
         {
             //Check if we're moving on the ground. We don't need footsteps in the air.
             if (data.IsGrounded && controller.velocity.sqrMagnitude > 0.1f)
             {
                 //Select the correct audio clip to play.
-                data.AudioSource.clip = footstepClip;
+                data.AudioSource.clip = data.Move.FootstepsAudio;
                 //Play it!
                 if (!data.AudioSource.isPlaying)
                     data.AudioSource.Play();
@@ -144,12 +140,12 @@ namespace Ziumper.Shooter
 
         public override void ExitState()
         {
-            context.StateEvents.OnJump.RemoveAllListeners();
+            context.PlayerEvents.OnJump.RemoveAllListeners();
         }
 
         protected virtual void CalculateJump()
         {
-            data.JumpingForce = Vector3.SmoothDamp(data.JumpingForce, Vector3.zero, ref data.JumpingVelocity, data.JumpingFalloff);
+            data.Move.JumpingForce = Vector3.SmoothDamp(data.Move.JumpingForce, Vector3.zero, ref data.Move.JumpingVelocity, data.JumpingFalloff);
         }
 
     }

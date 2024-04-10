@@ -10,7 +10,7 @@ namespace Ziumper.Shooter
             base.EnterState(context, data);
 
             //weapon events
-            context.StateEvents.OnInventoryNext.AddListener((scrollValue) => {
+            context.PlayerEvents.OnInventoryNext.AddListener((scrollValue) => {
                 int indexNext = scrollValue > 0 ? data.Inventory.GetNextIndex() : data.Inventory.GetLastIndex();
                 //Get the current weapon's index.
                 int indexCurrent = data.Inventory.GetEquippedIndex();
@@ -19,19 +19,19 @@ namespace Ziumper.Shooter
                 if ((indexCurrent != indexNext))
                 {
                     data.NextWeaponIndex = indexNext;
-                    context.ChangeStateTo(context.Holstering, data);
+                    context.ChangeStateTo(context.States.NextWeapon, data);
                 }
             });
 
-            context.StateEvents.OnReloadStart.AddListener(() => context.ChangeStateTo(context.Reloading, data));
-            context.StateEvents.OnInspectStart.AddListener(() => context.ChangeStateTo(context.Inspecting, data));
-            context.StateEvents.OnSingleFire.AddListener(ChangeToFire);
+            context.PlayerEvents.OnReloadStart.AddListener(() => context.ChangeStateTo(context.States.Reloading, data));
+            context.PlayerEvents.OnInspectStart.AddListener(() => context.ChangeStateTo(context.States.Inspecting, data));
+            context.PlayerEvents.OnSingleFire.AddListener(ChangeToFire);
          
         }
 
         private void ChangeToFire()
         {
-            context.ChangeStateTo(context.Firing, data);
+            context.ChangeStateTo(context.States.Firing, data);
         }
 
         public override void Update()
@@ -40,29 +40,29 @@ namespace Ziumper.Shooter
 
             if (data.Input.IsHoldingButtonAim)
             {
-                context.ChangeStateTo(context.Aiming, data);
+                context.ChangeStateTo(context.States.Aiming, data);
                 return;
             }
           
-            if (data.Input.IsHoldingButtonRun && !context.Running.IsMovingSideWays())
+            if (data.Input.IsHoldingButtonRun && !context.States.Running.IsMovingSideWays())
             {
-                context.ChangeStateTo(context.Running, data);
+                context.ChangeStateTo(context.States.Running, data);
                 return;
             }
 
             if (data.Input.IsHoldingButtonFire)
             {
-                context.ChangeStateTo(context.Firing, data);
+                context.ChangeStateTo(context.States.Firing, data);
             }
         }
 
         public override void ExitState()
         {
             base.ExitState();
-            context.StateEvents.OnSingleFire.RemoveAllListeners();
-            context.StateEvents.OnInventoryNext.RemoveAllListeners();
-            context.StateEvents.OnReloadStart.RemoveAllListeners();
-            context.StateEvents.OnInspectStart.RemoveAllListeners();
+            context.PlayerEvents.OnSingleFire.RemoveAllListeners();
+            context.PlayerEvents.OnInventoryNext.RemoveAllListeners();
+            context.PlayerEvents.OnReloadStart.RemoveAllListeners();
+            context.PlayerEvents.OnInspectStart.RemoveAllListeners();
         }
 
 

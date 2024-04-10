@@ -15,15 +15,15 @@ namespace Ziumper.Shooter
             Debug.Log("Entering Aiming State");
             SetAimingAnimationCondition(true);
          
-            context.StateEvents.OnJump.RemoveAllListeners();
-            context.StateEvents.OnSingleFire.AddListener(() => { 
-                context.ChangeStateTo(context.AimingFire, data); 
+            context.PlayerEvents.OnJump.RemoveAllListeners();
+            context.PlayerEvents.OnSingleFire.AddListener(() => { 
+                context.ChangeStateTo(context.States.AimingFire, data); 
             });
         }
 
         public override void ExitState()
         {
-            context.StateEvents.OnSingleFire.RemoveAllListeners();
+            context.PlayerEvents.OnSingleFire.RemoveAllListeners();
         }
 
         public override void Update()
@@ -31,7 +31,7 @@ namespace Ziumper.Shooter
             if (!data.Input.IsHoldingButtonAim)
             {
                 SetAimingAnimationCondition(false);
-                context.ChangeStateTo(context.Default, data);
+                context.ChangeStateTo(context.States.Default, data);
                 return;
             }
 

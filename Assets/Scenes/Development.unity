@@ -8858,8 +8858,8 @@ MonoBehaviour:
     SpeedRunning: 8
     GravityAmount: 0.3
     GravityMin: -3
-    JumpingHeight: 20
-    JumpingFalloff: 0.15
+    JumpingHeight: 10
+    JumpingFalloff: 0.1
 --- !u!114 &836103651
 MonoBehaviour:
   m_ObjectHideFlags: 0

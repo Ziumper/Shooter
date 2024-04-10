@@ -8,13 +8,13 @@ namespace Ziumper.Shooter
         {
             base.EnterState(context, data);
             data.CharacterAnimator.CrossFade("Inspect", 0.0f, data.LayerActions, 0);
-            context.StateEvents.OnInspectEnd.AddListener(OnInspectEnd);
+            context.PlayerEvents.OnInspectEnd.AddListener(OnInspectEnd);
         }
 
         private void OnInspectEnd()
         {
-            context.StateEvents.OnInspectEnd.RemoveListener(OnInspectEnd);
-            context.ChangeStateTo(context.Default, data);
+            context.PlayerEvents.OnInspectEnd.RemoveListener(OnInspectEnd);
+            context.ChangeStateTo(context.States.Default, data);
         }
         
     }

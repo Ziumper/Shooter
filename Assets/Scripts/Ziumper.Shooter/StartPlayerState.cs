@@ -15,7 +15,7 @@ namespace Ziumper.Shooter
             data.LayerOverlay = data.CharacterAnimator.GetLayerIndex("Layer Overlay");
             data.AudioSource = context.GetComponent<AudioSource>();
 
-            context.StateEvents.OnCursorUpdate.AddListener(() =>
+            context.PlayerEvents.OnCursorUpdate.AddListener(() =>
             {
                 data.CursorsLocked = !data.CursorsLocked;
 
@@ -25,13 +25,13 @@ namespace Ziumper.Shooter
                 Cursor.lockState = data.CursorsLocked ? CursorLockMode.Locked : CursorLockMode.None;
             });
 
-            context.StateEvents.OnMove.AddListener((moveVector) => data.Input.AxisMovement = data.CursorsLocked ? moveVector : default);
-            context.StateEvents.OnLook.AddListener((lookVector) => data.Input.AxisLook = data.CursorsLocked ? lookVector : default);
-            context.StateEvents.OnFillAmmunniton.AddListener((amount) => data.EquippedWeapon.FillAmmunition(amount));
-            context.StateEvents.OnSetActiveMagazine.AddListener((active) => data.EquippedWeaponMagazine.gameObject.SetActive(active != 0));
-            context.StateEvents.OnEjectCasing.AddListener(() => data.EquippedWeapon.EjectCasing());
+            context.PlayerEvents.OnMove.AddListener((moveVector) => data.Input.AxisMovement = data.CursorsLocked ? moveVector : default);
+            context.PlayerEvents.OnLook.AddListener((lookVector) => data.Input.AxisLook = data.CursorsLocked ? lookVector : default);
+            context.PlayerEvents.OnFillAmmunniton.AddListener((amount) => data.EquippedWeapon.FillAmmunition(amount));
+            context.PlayerEvents.OnSetActiveMagazine.AddListener((active) => data.EquippedWeaponMagazine.gameObject.SetActive(active != 0));
+            context.PlayerEvents.OnEjectCasing.AddListener(() => data.EquippedWeapon.EjectCasing());
 
-            context.ChangeStateTo(context.Default, data);
+            context.ChangeStateTo(context.States.Default, data);
         }
 
     }

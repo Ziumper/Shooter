@@ -15,10 +15,10 @@ namespace Ziumper.Shooter
             {
                 FireSingle();
 
-                context.StateEvents.OnSingleFireCancel.AddListener(() => 
+                context.PlayerEvents.OnSingleFireCancel.AddListener(() => 
                 {
-                    context.StateEvents.OnSingleFire.RemoveAllListeners();
-                    context.ChangeStateTo(context.Default, data);
+                    context.PlayerEvents.OnSingleFire.RemoveAllListeners();
+                    context.ChangeStateTo(context.Previous, data);
                 });
             }
         }
@@ -35,7 +35,7 @@ namespace Ziumper.Shooter
                 }
                 else
                 {
-                    context.ChangeStateTo(context.Default, data);
+                    context.ChangeStateTo(context.Previous, data);
                 }
             }
         }
@@ -70,7 +70,7 @@ namespace Ziumper.Shooter
         public override void ExitState()
         {
             base.ExitState();
-            context.StateEvents.OnSingleFireCancel.RemoveAllListeners();
+            context.PlayerEvents.OnSingleFireCancel.RemoveAllListeners();
         }
 
         public void FireEmpty()

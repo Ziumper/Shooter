@@ -14,7 +14,7 @@ namespace Ziumper.Shooter
             {
                 data.IsHolstered = true;
                 data.CharacterAnimator.SetBool("Holstered", data.IsHolstered);
-                context.StateEvents.OnHolsteringEnd.AddListener(OnHolsteringEnd);
+                context.PlayerEvents.OnHolsteringEnd.AddListener(OnHolsteringEnd);
             } else
             {
                 OnHolsteringEnd();
@@ -23,8 +23,8 @@ namespace Ziumper.Shooter
 
         private void OnHolsteringEnd()
         {
-            context.StateEvents.OnHolsteringEnd.RemoveListener(OnHolsteringEnd);
-            context.ChangeStateTo(context.Default, data);
+            context.PlayerEvents.OnHolsteringEnd.RemoveListener(OnHolsteringEnd);
+            context.ChangeStateTo(context.States.Default, data);
         }
 
         public override void ExitState()
@@ -35,7 +35,7 @@ namespace Ziumper.Shooter
             data.CharacterAnimator.Play("Unholster", data.LayerHolster, 0);
 
             data.Inventory.Equip(data.NextWeaponIndex);
-            context.Firing.RefreshWeaponSetup();
+            context.States.Firing.RefreshWeaponSetup();
         }
         
     }
