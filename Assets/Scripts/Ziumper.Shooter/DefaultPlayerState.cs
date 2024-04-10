@@ -9,8 +9,6 @@ namespace Ziumper.Shooter
         {
             base.EnterState(context, data);
 
-            Debug.Log("Entering default state");
-
             //weapon events
             context.StateEvents.OnInventoryNext.AddListener((scrollValue) => {
                 int indexNext = scrollValue > 0 ? data.Inventory.GetNextIndex() : data.Inventory.GetLastIndex();
@@ -40,24 +38,22 @@ namespace Ziumper.Shooter
         {
             base.Update();
 
-            if (data.IsHoldingButtonAim)
+            if (data.Input.IsHoldingButtonAim)
             {
                 context.ChangeStateTo(context.Aiming, data);
                 return;
             }
           
-            if (data.IsHoldingButtonRun && !context.Running.IsMovingSideWays())
+            if (data.Input.IsHoldingButtonRun && !context.Running.IsMovingSideWays())
             {
                 context.ChangeStateTo(context.Running, data);
                 return;
             }
 
-            if (data.IsHoldingButtonFire)
+            if (data.Input.IsHoldingButtonFire)
             {
                 context.ChangeStateTo(context.Firing, data);
             }
-
-            CalculateJump();
         }
 
         public override void ExitState()

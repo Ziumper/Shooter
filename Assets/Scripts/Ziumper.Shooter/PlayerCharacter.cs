@@ -32,8 +32,8 @@ namespace Ziumper.Shooter
 
         public override bool IsTutorialTextVisible() => false;
 
-        public override Vector2 GetInputMovement() => data.AxisMovement;
-        public override Vector2 GetInputLook() => data.AxisLook;
+        public override Vector2 GetInputMovement() => data.Input.AxisMovement;
+        public override Vector2 GetInputLook() => data.Input.AxisLook;
 
         /// <summary>
         /// Fire.
@@ -50,7 +50,7 @@ namespace Ziumper.Shooter
                 //Started.
                 case { phase: InputActionPhase.Started }:
                     //Hold.
-                    data.IsHoldingButtonFire = true;
+                    data.Input.IsHoldingButtonFire = true;
                     break;
                 //Performed.
                 case { phase: InputActionPhase.Performed }:
@@ -59,7 +59,7 @@ namespace Ziumper.Shooter
                 //Canceled.
                 case { phase: InputActionPhase.Canceled }:
                     //Stop Hold.
-                    data.IsHoldingButtonFire = false;
+                    data.Input.IsHoldingButtonFire = false;
                     stateManager.StateEvents.OnSingleFireCancel.Invoke();
                     break;
             }
@@ -118,11 +118,11 @@ namespace Ziumper.Shooter
             {
                 case InputActionPhase.Started:
                     //Started.
-                    data.IsHoldingButtonAim = true;
+                    data.Input.IsHoldingButtonAim = true;
                     break;
                 case InputActionPhase.Canceled:
                     //Canceled.
-                    data.IsHoldingButtonAim = false;
+                    data.Input.IsHoldingButtonAim = false;
                     break;
             }
         }
@@ -161,12 +161,12 @@ namespace Ziumper.Shooter
                 //Started.
                 case InputActionPhase.Started:
                     //Start.
-                    data.IsHoldingButtonRun = true;
+                    data.Input.IsHoldingButtonRun = true;
                     break;
                 //Canceled.
                 case InputActionPhase.Canceled:
                     //Stop.
-                    data.IsHoldingButtonRun = false;
+                    data.Input.IsHoldingButtonRun = false;
                     break;
             }
         }

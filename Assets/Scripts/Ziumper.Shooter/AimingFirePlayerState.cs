@@ -22,7 +22,7 @@
         {
             if(data.EquippedWeapon.IsAutomatic())
             {
-                if (data.IsHoldingButtonFire && data.IsHoldingButtonAim)
+                if (data.Input.IsHoldingButtonFire && data.Input.IsHoldingButtonAim)
                 {
                     context.Firing.FireSingle();
                     context.Aiming.UpdateAiming(true);

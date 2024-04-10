@@ -9,7 +9,6 @@ namespace Ziumper.Shooter
     {
         protected static readonly int HashMovement = Animator.StringToHash("Movement");
         protected float movingSpeed;
-        protected float moveJumpValue;
         protected bool jumped;
 
         protected AudioClip footstepsClip;
@@ -43,7 +42,7 @@ namespace Ziumper.Shooter
             if (data.IsGrounded)
             {
                 Vector2 frameInput = character.GetInputMovement();
-                moveJumpValue = frameInput.y;
+                data.Input.MovedJumpValue = frameInput.y;
                 data.JumpingForce = Vector3.up * data.JumpingHeight;
             }
         }
@@ -64,7 +63,7 @@ namespace Ziumper.Shooter
             var movement = new Vector3(frameInput.x, 0.0f, frameInput.y);
             if (!data.IsGrounded)
             {
-                movement.z = moveJumpValue;
+                movement.z = data.Input.MovedJumpValue;
             } 
             
             movement *= movingSpeed * Time.deltaTime;
@@ -114,7 +113,7 @@ namespace Ziumper.Shooter
 
         public void UpdateMovementAnimatorValue()
         {
-            float movementAnimator = Mathf.Clamp01(Mathf.Abs(data.AxisMovement.x) + Mathf.Abs(data.AxisMovement.y));
+            float movementAnimator = Mathf.Clamp01(Mathf.Abs(data.Input.AxisMovement.x) + Mathf.Abs(data.Input.AxisMovement.y));
 
             if(!data.IsGrounded)
             {

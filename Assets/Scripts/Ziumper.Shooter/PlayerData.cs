@@ -7,6 +7,21 @@ namespace Ziumper.Shooter
     [Serializable]
     public class PlayerData
     {
+        public class  InputData
+        {
+            public bool IsHoldingButtonRun;
+            public bool IsHoldingButtonAim;
+            public bool IsHoldingButtonFire;
+            public Vector2 AxisMovement;
+            public Vector2 AxisLook;
+            public float MovedJumpValue;
+        }
+
+        public PlayerData()
+        {
+            Input = new InputData();
+        }
+
         [Header("Inventory")]
         public InventoryBehaviour Inventory;
         [Header("Cameras")]
@@ -48,17 +63,10 @@ namespace Ziumper.Shooter
         public float JumpingFalloff;
         public Vector3 JumpingForce { get; set; }
         [NonSerialized] public Vector3 JumpingVelocity;
-      
-       
 
+        public InputData Input;
         public bool CursorsLocked { get; set; }
 
-        //Input
-        public bool IsHoldingButtonRun { get; set; }
-        public bool IsHoldingButtonAim { get; set; }
-        public bool IsHoldingButtonFire { get; set; }
-        public Vector2 AxisMovement { get; set; }
-        public Vector2 AxisLook { get; set; }
         public AudioSource AudioSource { get; set; }
         public CharacterKinematics CharacterKinematics { get; set; }
 

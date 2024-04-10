@@ -26,24 +26,22 @@ namespace Ziumper.Shooter
 
         public override void Update()
         {
-            if (data.IsGrounded)
+            base.Update();
+            Vector2 frameInput = character.GetInputMovement();
+            bool isNoInput = frameInput.x == 0 && frameInput.y == 0;
+            
+            if ((!data.Input.IsHoldingButtonRun || isNoInput || IsMovingSideWays()) && data.IsGrounded)
             {
-                Vector2 frameInput = character.GetInputMovement();
-                bool isNoInput = frameInput.x == 0 && frameInput.y == 0;
-                if (!data.IsHoldingButtonRun || isNoInput || IsMovingSideWays())
-                {
-                    context.ChangeStateTo(context.Default, data);
-                    return;
-                }
+                context.ChangeStateTo(context.Default, data);
+                return;
             }
 
-            base.Update();
             SetRunningAnimationCondition(data.IsGrounded);
         }
 
         public bool IsMovingSideWays()
         {
-            return data.AxisMovement.y <= 0 || Math.Abs(Mathf.Abs(data.AxisMovement.x) - 1) < 0.01f;
+            return data.Input.AxisMovement.y <= 0 || Math.Abs(Mathf.Abs(data.Input.AxisMovement.x) - 1) < 0.01f;
         }
 
      

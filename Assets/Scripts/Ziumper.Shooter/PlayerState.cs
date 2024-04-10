@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace Ziumper.Shooter
 {
     public abstract class PlayerState

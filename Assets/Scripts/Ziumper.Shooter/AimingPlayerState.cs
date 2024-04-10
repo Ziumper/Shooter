@@ -28,7 +28,7 @@ namespace Ziumper.Shooter
 
         public override void Update()
         {
-            if (!data.IsHoldingButtonAim)
+            if (!data.Input.IsHoldingButtonAim)
             {
                 SetAimingAnimationCondition(false);
                 context.ChangeStateTo(context.Default, data);

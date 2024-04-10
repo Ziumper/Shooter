@@ -29,7 +29,7 @@ namespace Ziumper.Shooter
 
             if(data.EquippedWeapon.IsAutomatic())
             {
-                if (data.IsHoldingButtonFire)
+                if (data.Input.IsHoldingButtonFire)
                 {
                     FireSingle();
                 }
