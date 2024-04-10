@@ -20,11 +20,18 @@ namespace Ziumper.Shooter
             context.PlayerEvents.OnSingleFire.AddListener(() => { 
                 context.ChangeStateTo(context.PlayerStates.AimingFire, data); 
             });
+
+
+            //weapon events
+            context.PlayerEvents.OnInventoryNext.AddListener((scrollValue) => context.PlayerStates.NextWeapon.NextInventory(scrollValue));
+            context.PlayerEvents.OnReloadStart.AddListener(() => context.ChangeStateTo(context.PlayerStates.Reloading, data));
         }
 
         public override void ExitState()
         {
             context.PlayerEvents.OnSingleFire.RemoveAllListeners();
+            context.PlayerEvents.OnInventoryNext.RemoveAllListeners();
+            context.PlayerEvents.OnReloadStart.RemoveAllListeners();
         }
 
         public override void Update()

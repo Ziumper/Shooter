@@ -21,9 +21,10 @@ namespace Ziumper.Shooter
         public override void Update()
         {
             base.Update();
-          
+
+            bool wasPreivouslyAiming = context.PreviousState == context.PlayerStates.Aiming;
             bool reloadingAndWasPreivouslyRunning = context.PreviousState == context.PlayerStates.Running && data.IsRunning; //handle when player is running on ground and still reloading
-            if (reloadingAndWasPreivouslyRunning)
+            if (reloadingAndWasPreivouslyRunning || wasPreivouslyAiming)
             {
                 data.Move.CurrentSpeed = data.SpeedWalking;
             }  
