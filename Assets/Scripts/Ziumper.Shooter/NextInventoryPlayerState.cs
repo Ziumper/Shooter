@@ -3,7 +3,7 @@
 
 namespace Ziumper.Shooter
 {
-    public class InventoryNextPlayerState : MovingPlayerState
+    public class NextInventoryPlayerState : MovingPlayerState
     {
         public override void EnterState(PlayerStateManager context, PlayerData data)
         {
@@ -21,10 +21,24 @@ namespace Ziumper.Shooter
             }
         }
 
+        public void NextInventory(float scrollValue)
+        {
+            int indexNext = scrollValue > 0 ? data.Inventory.GetNextIndex() : data.Inventory.GetLastIndex();
+            //Get the current weapon's index.
+            int indexCurrent = data.Inventory.GetEquippedIndex();
+
+            //Make sure we're allowed to change, and also that we're not using the same index, otherwise weird things happen!
+            if ((indexCurrent != indexNext))
+            {
+                data.NextWeaponIndex = indexNext;
+                context.ChangeStateTo(context.PlayerStates.NextWeapon, data);
+            }
+        }
+
         private void OnHolsteringEnd()
         {
             context.PlayerEvents.OnHolsteringEnd.RemoveListener(OnHolsteringEnd);
-            context.ChangeStateTo(context.States.Default, data);
+            context.ChangeStateTo(context.Previous, data);
         }
 
         public override void ExitState()
@@ -35,7 +49,7 @@ namespace Ziumper.Shooter
             data.CharacterAnimator.Play("Unholster", data.LayerHolster, 0);
 
             data.Inventory.Equip(data.NextWeaponIndex);
-            context.States.Firing.RefreshWeaponSetup();
+            context.PlayerStates.Firing.RefreshWeaponSetup();
         }
         
     }

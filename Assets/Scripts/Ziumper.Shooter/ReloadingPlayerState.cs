@@ -23,7 +23,7 @@ namespace Ziumper.Shooter
         private void OnReloadEnd()
         {
             context.PlayerEvents.OnReloadEnd.RemoveListener(OnReloadEnd);
-            context.ChangeStateTo(context.States.Default, data);
+            context.ChangeStateTo(context.Previous, data);
         }
     }
 

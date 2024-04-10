@@ -14,7 +14,7 @@ namespace Ziumper.Shooter
         private void OnInspectEnd()
         {
             context.PlayerEvents.OnInspectEnd.RemoveListener(OnInspectEnd);
-            context.ChangeStateTo(context.States.Default, data);
+            context.ChangeStateTo(context.PlayerStates.Default, data);
         }
         
     }

@@ -12,12 +12,12 @@ namespace Ziumper.Shooter
         protected override void Awake()
         {
             stateManager = GetComponent<PlayerStateManager>();
-            stateManager.ChangeStateTo(stateManager.States.Awake, data);
+            stateManager.ChangeStateTo(stateManager.PlayerStates.Awake, data);
         }
 
         protected override void Start()
         {
-            stateManager.ChangeStateTo(stateManager.States.Start, data);
+            stateManager.ChangeStateTo(stateManager.PlayerStates.Start, data);
         }
 
         public override Camera GetCameraWorld() => data.CameraWorld;

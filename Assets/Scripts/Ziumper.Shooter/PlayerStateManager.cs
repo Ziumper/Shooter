@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Codice.Client.Common;
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -35,7 +36,7 @@ namespace Ziumper.Shooter
             public RunningPlayerState Running = new();
             public AimingPlayerState Aiming = new();
             public InspectingPlayerState Inspecting = new();
-            public InventoryNextPlayerState NextWeapon = new();
+            public NextInventoryPlayerState NextWeapon = new();
             public ReloadingPlayerState Reloading = new();
             public FiringPlayerState Firing = new();
             public AimingFirePlayerState AimingFire = new();
@@ -43,12 +44,11 @@ namespace Ziumper.Shooter
 
         private PlayerState current;
         private PlayerState previous;
-
-        public PlayerState Current { get { return current; } }
+     
         public PlayerState Previous { get { return previous; } }
 
         public PlayerStateEvents PlayerEvents = new PlayerStateEvents();
-        public StatesContainer States = new StatesContainer();
+        public StatesContainer PlayerStates = new StatesContainer();
         
         public void ChangeStateTo(PlayerState newState, PlayerData data)
         {

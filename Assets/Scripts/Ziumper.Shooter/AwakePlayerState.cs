@@ -15,15 +15,19 @@ namespace Ziumper.Shooter
             data.CharacterKinematics = context.gameObject.GetComponent<CharacterKinematics>();
             data.Inventory.Init();
 
-            context.States.Firing.Data = data;
-            context.States.Aiming.Data = data;
-            context.States.Running.Data = data;
-
-            context.States.Firing.RefreshWeaponSetup();
+            InitalizeCoreStatesData();
+            
+            context.PlayerStates.Firing.RefreshWeaponSetup();
         }
 
-        public override void LateUpdate() { }
-        public override void Update() { }
+        private void InitalizeCoreStatesData()
+        {
+            context.PlayerStates.Firing.Data = data;
+            context.PlayerStates.Aiming.Data = data;
+            context.PlayerStates.Running.Data = data;
+            context.PlayerStates.NextWeapon.Data = data;
+            context.PlayerStates.NextWeapon.Context = context;
+        }
     }
 
 }

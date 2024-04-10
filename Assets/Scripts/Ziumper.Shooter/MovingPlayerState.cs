@@ -15,10 +15,6 @@ namespace Ziumper.Shooter
         {
             base.EnterState(context, data);
 
-            //set up defaults
-            data.Move.CurrentSpeed = data.SpeedWalking;
-            data.Move.FootstepsAudio = data.AudioClipWalking;
-
             //cache 
             if (character == null)
             {
@@ -49,7 +45,7 @@ namespace Ziumper.Shooter
             CalculateJump();
 
             UpdateMovementAnimatorValue();
-            context.States.Aiming.UpdateAimingAnimatorValue(false);
+            context.PlayerStates.Aiming.UpdateAimingAnimatorValue(false);
         }
 
         protected void UpdateMovement()

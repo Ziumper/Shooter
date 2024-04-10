@@ -31,7 +31,7 @@ namespace Ziumper.Shooter
             context.PlayerEvents.OnSetActiveMagazine.AddListener((active) => data.EquippedWeaponMagazine.gameObject.SetActive(active != 0));
             context.PlayerEvents.OnEjectCasing.AddListener(() => data.EquippedWeapon.EjectCasing());
 
-            context.ChangeStateTo(context.States.Default, data);
+            context.ChangeStateTo(context.PlayerStates.Default, data);
         }
 
     }

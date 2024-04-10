@@ -1,6 +1,4 @@
-﻿using InfimaGames.LowPolyShooterPack;
-using System;
-using System.Data.Common;
+﻿using System;
 using UnityEngine;
 
 namespace Ziumper.Shooter
@@ -15,13 +13,21 @@ namespace Ziumper.Shooter
             base.EnterState(context, data);
             data.Move.CurrentSpeed = data.SpeedRunning;
             data.Move.FootstepsAudio = data.AudioClipRunning;
+
+            //weapon events
+            context.PlayerEvents.OnInventoryNext.AddListener((scrollValue) => { if (!data.IsGrounded) { context.PlayerStates.NextWeapon.NextInventory(scrollValue);}});
+            context.PlayerEvents.OnReloadStart.AddListener(() => { if (!data.IsGrounded) { context.ChangeStateTo(context.PlayerStates.Reloading, data);}});
+            context.PlayerEvents.OnSingleFire.AddListener(() => { if (!data.IsGrounded) { context.ChangeStateTo(context.PlayerStates.Firing, data); } });
+
             SetRunningAnimationCondition(true);
         }
 
         public override void ExitState()
         {
             SetRunningAnimationCondition(false);
-            data.AudioSource.Stop();
+            context.PlayerEvents.OnSingleFire.RemoveAllListeners();
+            context.PlayerEvents.OnInventoryNext.RemoveAllListeners();
+            context.PlayerEvents.OnReloadStart.RemoveAllListeners();
         }
 
         public override void Update()
@@ -32,7 +38,7 @@ namespace Ziumper.Shooter
             bool shouldChangeToDefault = (!data.Input.IsHoldingButtonRun || isNoInput || IsMovingSideWays()) && data.IsGrounded;
             if (shouldChangeToDefault)
             {
-                context.ChangeStateTo(context.States.Default, data);
+                context.ChangeStateTo(context.PlayerStates.Default, data);
                 return;
             }
 
@@ -45,7 +51,7 @@ namespace Ziumper.Shooter
             return data.Input.AxisMovement.y <= 0 || Math.Abs(Mathf.Abs(data.Input.AxisMovement.x) - 1) < 0.01f;
         }
 
-     
+
         private void SetRunningAnimationCondition(bool running)
         {
             data.CharacterAnimator.SetBool(boolNameRun, running);

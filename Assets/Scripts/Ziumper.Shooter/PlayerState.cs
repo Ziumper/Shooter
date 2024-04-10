@@ -8,6 +8,7 @@ namespace Ziumper.Shooter
         protected PlayerStateManager context;
 
         public PlayerData Data { set { data = value; } }
+        public PlayerStateManager Context { set { context = value; } }
 
         public virtual void EnterState(PlayerStateManager context, PlayerData data)
         {

@@ -1,6 +1,4 @@
-﻿using System;
-using UnityEngine;
-
+﻿
 namespace Ziumper.Shooter
 {
     public class DefaultPlayerState : MovingPlayerState
@@ -9,50 +7,37 @@ namespace Ziumper.Shooter
         {
             base.EnterState(context, data);
 
+            //set up defaults if not set 
+            data.Move.CurrentSpeed = data.SpeedWalking;
+            data.Move.FootstepsAudio = data.AudioClipWalking;
+
             //weapon events
-            context.PlayerEvents.OnInventoryNext.AddListener((scrollValue) => {
-                int indexNext = scrollValue > 0 ? data.Inventory.GetNextIndex() : data.Inventory.GetLastIndex();
-                //Get the current weapon's index.
-                int indexCurrent = data.Inventory.GetEquippedIndex();
+            context.PlayerEvents.OnInventoryNext.AddListener((scrollValue) => context.PlayerStates.NextWeapon.NextInventory(scrollValue));
 
-                //Make sure we're allowed to change, and also that we're not using the same index, otherwise weird things happen!
-                if ((indexCurrent != indexNext))
-                {
-                    data.NextWeaponIndex = indexNext;
-                    context.ChangeStateTo(context.States.NextWeapon, data);
-                }
-            });
-
-            context.PlayerEvents.OnReloadStart.AddListener(() => context.ChangeStateTo(context.States.Reloading, data));
-            context.PlayerEvents.OnInspectStart.AddListener(() => context.ChangeStateTo(context.States.Inspecting, data));
-            context.PlayerEvents.OnSingleFire.AddListener(ChangeToFire);
-         
+            context.PlayerEvents.OnReloadStart.AddListener(() => context.ChangeStateTo(context.PlayerStates.Reloading, data));
+            context.PlayerEvents.OnInspectStart.AddListener(() => context.ChangeStateTo(context.PlayerStates.Inspecting, data));
+            context.PlayerEvents.OnSingleFire.AddListener(() => context.ChangeStateTo(context.PlayerStates.Firing, data));
         }
-
-        private void ChangeToFire()
-        {
-            context.ChangeStateTo(context.States.Firing, data);
-        }
-
+        
         public override void Update()
         {
             base.Update();
 
             if (data.Input.IsHoldingButtonAim)
             {
-                context.ChangeStateTo(context.States.Aiming, data);
+                context.ChangeStateTo(context.PlayerStates.Aiming, data);
                 return;
             }
           
-            if (data.Input.IsHoldingButtonRun && !context.States.Running.IsMovingSideWays())
+            if (data.Input.IsHoldingButtonRun && !context.PlayerStates.Running.IsMovingSideWays())
             {
-                context.ChangeStateTo(context.States.Running, data);
+                context.ChangeStateTo(context.PlayerStates.Running, data);
                 return;
             }
 
             if (data.Input.IsHoldingButtonFire)
             {
-                context.ChangeStateTo(context.States.Firing, data);
+                context.ChangeStateTo(context.PlayerStates.Firing, data);
             }
         }
 

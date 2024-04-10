@@ -7,11 +7,11 @@
             base.EnterState(context, data);
             if (!data.EquippedWeapon.IsAutomatic())
             {
-                context.States.Firing.FireSingle();
+                context.PlayerStates.Firing.FireSingle();
                 context.PlayerEvents.OnSingleFireCancel.AddListener(() =>
                 {
                     context.PlayerEvents.OnSingleFire.RemoveAllListeners();
-                    context.ChangeStateTo(context.States.Aiming, data);
+                    context.ChangeStateTo(context.PlayerStates.Aiming, data);
                 });
             }
 
@@ -24,13 +24,13 @@
             {
                 if (data.Input.IsHoldingButtonFire && data.Input.IsHoldingButtonAim)
                 {
-                    context.States.Firing.FireSingle();
-                    context.States.Aiming.UpdateAiming(true);
+                    context.PlayerStates.Firing.FireSingle();
+                    context.PlayerStates.Aiming.UpdateAiming(true);
                     UpdateMovement();
                 }
                 else
                 {
-                    context.ChangeStateTo(context.States.Aiming, data);
+                    context.ChangeStateTo(context.PlayerStates.Aiming, data);
                 }
             }
         }
