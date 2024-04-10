@@ -18,7 +18,7 @@ namespace Ziumper.Shooter
                 context.PlayerEvents.OnSingleFireCancel.AddListener(() => 
                 {
                     context.PlayerEvents.OnSingleFire.RemoveAllListeners();
-                    context.ChangeStateTo(context.Previous, data);
+                    context.ChangeStateTo(context.PreviousState, data);
                 });
             }
         }
@@ -26,6 +26,17 @@ namespace Ziumper.Shooter
         public override void Update()
         {
             base.Update();
+
+            if (data.Input.IsHoldingButtonAim)
+            {
+                context.ChangeStateTo(context.PlayerStates.AimingFire, data);
+                return;
+            }
+
+            if (context.PlayerStates.Running == context.PreviousState && data.IsRunning)
+            {
+                data.Move.CurrentSpeed = data.SpeedWalking;   
+            }
 
             if(data.EquippedWeapon.IsAutomatic())
             {
@@ -35,7 +46,7 @@ namespace Ziumper.Shooter
                 }
                 else
                 {
-                    context.ChangeStateTo(context.Previous, data);
+                    context.ChangeStateTo(context.PlayerStates.Default, data);
                 }
             }
         }

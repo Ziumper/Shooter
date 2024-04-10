@@ -20,6 +20,11 @@
 
         public override void Update()
         {
+            if(data.IsRunning)
+            {
+                data.Move.CurrentSpeed = data.SpeedWalking;
+            }
+
             if(data.EquippedWeapon.IsAutomatic())
             {
                 if (data.Input.IsHoldingButtonFire && data.Input.IsHoldingButtonAim)
@@ -27,10 +32,11 @@
                     context.PlayerStates.Firing.FireSingle();
                     context.PlayerStates.Aiming.UpdateAiming(true);
                     UpdateMovement();
+                    CalculateJump(); //we going down
                 }
                 else
                 {
-                    context.ChangeStateTo(context.PlayerStates.Aiming, data);
+                    context.ChangeStateTo(context.PlayerStates.Default, data);
                 }
             }
         }

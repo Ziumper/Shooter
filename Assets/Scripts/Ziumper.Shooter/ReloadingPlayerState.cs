@@ -8,8 +8,6 @@ namespace Ziumper.Shooter
         {
             base.EnterState(context, data);
 
-            Debug.Log("Entering Reload state");
-
             //Get the name of the animation state to play, which depends on weapon settings, and ammunition!
             string stateName = data.EquippedWeapon.HasAmmunition() ? "Reload" : "Reload Empty";
             //Play the animation state!
@@ -20,10 +18,21 @@ namespace Ziumper.Shooter
             context.PlayerEvents.OnReloadEnd.AddListener(OnReloadEnd);
         }
 
+        public override void Update()
+        {
+            base.Update();
+          
+            bool reloadingAndWasPreivouslyRunning = context.PreviousState == context.PlayerStates.Running && data.IsRunning; //handle when player is running on ground and still reloading
+            if (reloadingAndWasPreivouslyRunning)
+            {
+                data.Move.CurrentSpeed = data.SpeedWalking;
+            }  
+        }
+
         private void OnReloadEnd()
         {
             context.PlayerEvents.OnReloadEnd.RemoveListener(OnReloadEnd);
-            context.ChangeStateTo(context.Previous, data);
+            context.ChangeStateTo(context.PlayerStates.Default, data);
         }
     }
 

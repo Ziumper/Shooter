@@ -59,10 +59,9 @@ namespace Ziumper.Shooter
         public AudioClip AudioClipRunning;
 
         [Header("Speeds")]
-        public float SpeedWalking = 0.05f;
-
-        [Tooltip("How fast the player moves while running."), SerializeField]
-        public float SpeedRunning = 0.15f;
+        public float SpeedWalking = 4f;
+        public float SpeedRunning = 8f;
+        public float SpeedAiming = 2f;
 
         [Header("Gravity")]
         public float GravityAmount = 0.1f;
@@ -90,7 +89,7 @@ namespace Ziumper.Shooter
         public bool IsGrounded { get; set; }
         public bool IsHolstered { get; set; }
         public bool IsAiming { get; set; }
-        public bool IsRunning { get; set; }
+        public bool IsRunning { get { return SpeedRunning == Move.CurrentSpeed && IsGrounded; } }
 
         public int LayerHolster { get; set; }
         public int LayerActions { get; set; }

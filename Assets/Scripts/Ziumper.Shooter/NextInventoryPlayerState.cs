@@ -38,7 +38,7 @@ namespace Ziumper.Shooter
         private void OnHolsteringEnd()
         {
             context.PlayerEvents.OnHolsteringEnd.RemoveListener(OnHolsteringEnd);
-            context.ChangeStateTo(context.Previous, data);
+            context.ChangeStateTo(context.PreviousState, data);
         }
 
         public override void ExitState()

@@ -42,6 +42,7 @@ namespace Ziumper.Shooter
         public override void Update()
         {
             UpdateMovement();
+            PlayFootstepSounds();
             CalculateJump();
 
             UpdateMovementAnimatorValue();
@@ -84,7 +85,6 @@ namespace Ziumper.Shooter
             controller.Move(movement);
 
             data.IsGrounded = controller.isGrounded;
-            PlayFootstepSounds();
         }
 
         protected void PlayFootstepSounds()

@@ -8856,10 +8856,11 @@ MonoBehaviour:
     AudioClipRunning: {fileID: 8300000, guid: d2add02f58e61e640aba3ae9110591cb, type: 3}
     SpeedWalking: 4
     SpeedRunning: 8
+    SpeedAiming: 2
     GravityAmount: 0.3
     GravityMin: -3
     JumpingHeight: 10
-    JumpingFalloff: 0.1
+    JumpingFalloff: 0.12
 --- !u!114 &836103651
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17543,52 +17544,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 974e12a873dcfa64aaa4b0ac6234237d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StateEvents:
-    OnMove:
-      m_PersistentCalls:
-        m_Calls: []
-    OnLook:
-      m_PersistentCalls:
-        m_Calls: []
-    OnJump:
-      m_PersistentCalls:
-        m_Calls: []
-    OnInspectStart:
-      m_PersistentCalls:
-        m_Calls: []
-    OnInspectEnd:
-      m_PersistentCalls:
-        m_Calls: []
-    OnReloadStart:
-      m_PersistentCalls:
-        m_Calls: []
-    OnReloadEnd:
-      m_PersistentCalls:
-        m_Calls: []
-    OnInventoryNext:
-      m_PersistentCalls:
-        m_Calls: []
-    OnHolsteringEnd:
-      m_PersistentCalls:
-        m_Calls: []
-    OnSetActiveMagazine:
-      m_PersistentCalls:
-        m_Calls: []
-    OnFillAmmunniton:
-      m_PersistentCalls:
-        m_Calls: []
-    OnEjectCasing:
-      m_PersistentCalls:
-        m_Calls: []
-    OnSingleFire:
-      m_PersistentCalls:
-        m_Calls: []
-    OnSingleFireCancel:
-      m_PersistentCalls:
-        m_Calls: []
-    OnCursorUpdate:
-      m_PersistentCalls:
-        m_Calls: []
 --- !u!143 &1858796513
 CharacterController:
   m_ObjectHideFlags: 0

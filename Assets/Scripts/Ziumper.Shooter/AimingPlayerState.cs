@@ -11,7 +11,9 @@ namespace Ziumper.Shooter
         public override void EnterState(PlayerStateManager context, PlayerData data)
         {
             base.EnterState(context, data);
-
+            
+            data.Move.CurrentSpeed = data.SpeedAiming;
+            data.AudioSource.Stop();
             SetAimingAnimationCondition(true);
          
             context.PlayerEvents.OnJump.RemoveAllListeners();
@@ -36,6 +38,7 @@ namespace Ziumper.Shooter
 
             UpdateAiming(true);
             UpdateMovement();
+            CalculateJump();//gravity is applying force
         }
 
         public void SetAimingAnimationCondition(bool aiming)

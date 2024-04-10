@@ -45,7 +45,7 @@ namespace Ziumper.Shooter
         private PlayerState current;
         private PlayerState previous;
      
-        public PlayerState Previous { get { return previous; } }
+        public PlayerState PreviousState { get { return previous; } }
 
         public PlayerStateEvents PlayerEvents = new PlayerStateEvents();
         public StatesContainer PlayerStates = new StatesContainer();
