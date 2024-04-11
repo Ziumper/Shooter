@@ -24897,11 +24897,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DefaultRecoil:
-    RecoilX: -2
+    RecoilX: -10
     RecoilY: 2
     RecoilZ: 0.35
   AimingRecoil:
-    RecoilX: -2
+    RecoilX: -5
     RecoilY: 2
     RecoilZ: 0.35
 --- !u!4 &8129599920259364572
