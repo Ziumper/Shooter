@@ -8,7 +8,6 @@ namespace Ziumper.Shooter
         public override void EnterState(PlayerStateManager context, PlayerData data)
         {
             base.EnterState(context, data);
-            Debug.Log("Entering Holstering!");
 
             if(!data.IsHolstered)
             {
@@ -43,6 +42,7 @@ namespace Ziumper.Shooter
 
         public override void ExitState()
         {
+            base.ExitState();
             data.IsHolstered = false;
             data.CharacterAnimator.SetBool("Holstered", data.IsHolstered);
 

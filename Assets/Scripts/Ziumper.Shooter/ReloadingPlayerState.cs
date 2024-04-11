@@ -22,7 +22,7 @@ namespace Ziumper.Shooter
         {
             base.Update();
 
-            bool wasPreivouslyAiming = context.PreviousState == context.PlayerStates.Aiming;
+            bool wasPreivouslyAiming = context.PreviousState == context.PlayerStates.Aiming || context.PreviousState == context.PlayerStates.AimingFire;
             bool reloadingAndWasPreivouslyRunning = context.PreviousState == context.PlayerStates.Running && data.IsRunning; //handle when player is running on ground and still reloading
             if (reloadingAndWasPreivouslyRunning || wasPreivouslyAiming)
             {

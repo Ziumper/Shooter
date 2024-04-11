@@ -26,6 +26,7 @@ namespace Ziumper.Shooter
             context.PlayerStates.Aiming.Data = data;
             context.PlayerStates.Running.Data = data;
             context.PlayerStates.NextWeapon.Data = data;
+            context.PlayerStates.Firing.Context = context;
             context.PlayerStates.NextWeapon.Context = context;
         }
     }

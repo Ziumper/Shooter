@@ -1,4 +1,6 @@
-﻿namespace Ziumper.Shooter
+﻿using UnityEngine;
+
+namespace Ziumper.Shooter
 {
     public class AimingFirePlayerState : MovingPlayerState
     {
@@ -9,6 +11,7 @@
             {
                 if(data.Weapon.EquippedWeapon.HasAmmunition())
                 {
+                    data.CameraRecoil.RecoilShot(data.Weapon.EquippedWeaponSettings.AimingRecoil);
                     context.PlayerStates.Firing.FireSingle();
                     context.PlayerEvents.OnSingleFireCancel.AddListener(() =>
                     {
@@ -17,11 +20,19 @@
                     });
                 } else
                 {
+                    //no ammunition therefore just recoil and don't switch states we gona reload afterwards!
+                    data.CameraRecoil.RecoilShot(data.Weapon.EquippedWeaponSettings.AimingRecoil);
                     context.PlayerStates.Firing.FireSingle();
                 }
             }
 
             context.PlayerEvents.OnJump.RemoveAllListeners();
+        }
+
+        public override void ExitState()
+        {
+            base.ExitState();
+            context.PlayerEvents.OnSingleFireCancel.RemoveAllListeners();
         }
 
         public override void Update()
@@ -35,6 +46,7 @@
             {
                 if (data.Input.IsHoldingButtonFire && data.Input.IsHoldingButtonAim)
                 {
+                    data.CameraRecoil.RecoilShot(data.Weapon.EquippedWeaponSettings.AimingRecoil);
                     context.PlayerStates.Firing.FireSingle();
                     context.PlayerStates.Aiming.UpdateAiming(true);
                     UpdateMovement();

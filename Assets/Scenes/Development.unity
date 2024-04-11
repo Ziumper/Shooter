@@ -17159,6 +17159,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   snapiness: 6
   returnSpeed: 2
+  offsetClampPitch: -20
 --- !u!1001 &1942405511
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23757,12 +23758,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DefaultRecoil:
-    RecoilX: -2
-    RecoilY: 2
+    RecoilX: -0.5
+    RecoilY: 0.5
     RecoilZ: 0.35
   AimingRecoil:
-    RecoilX: -2
-    RecoilY: 2
+    RecoilX: -0.25
+    RecoilY: 0.25
     RecoilZ: 0.35
 --- !u!81 &5827704354893367849
 AudioListener:
@@ -24900,9 +24901,9 @@ MonoBehaviour:
     RecoilY: 2
     RecoilZ: 0.35
   AimingRecoil:
-    RecoilX: 0
-    RecoilY: 0
-    RecoilZ: 0
+    RecoilX: -2
+    RecoilY: 2
+    RecoilZ: 0.35
 --- !u!4 &8129599920259364572
 Transform:
   m_ObjectHideFlags: 0
