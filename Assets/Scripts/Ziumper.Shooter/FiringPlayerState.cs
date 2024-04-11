@@ -15,13 +15,21 @@ namespace Ziumper.Shooter
             if(!data.Weapon.EquippedWeapon.IsAutomatic()) 
             {
                 data.CameraRecoil.RecoilShot(data.Weapon.EquippedWeaponSettings.DefaultRecoil);
-                FireSingle();
 
-                context.PlayerEvents.OnSingleFireCancel.AddListener(() => 
+                if (data.Weapon.EquippedWeapon.HasAmmunition())
                 {
-                    context.PlayerEvents.OnSingleFire.RemoveAllListeners();
-                    context.ChangeStateTo(context.PlayerStates.Default, data);
-                });
+                    FireSingle();
+                    context.PlayerEvents.OnSingleFireCancel.AddListener(() =>
+                    {
+                        context.PlayerEvents.OnSingleFire.RemoveAllListeners();
+                        context.ChangeStateTo(context.PlayerStates.Default, data);
+                    });
+                }
+                else
+                {
+                    //just fire and not change state to default
+                    FireSingle(); 
+                }
             }
         }
 

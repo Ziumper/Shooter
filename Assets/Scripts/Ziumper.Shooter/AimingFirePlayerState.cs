@@ -7,12 +7,18 @@
             base.EnterState(context, data);
             if (!data.Weapon.EquippedWeapon.IsAutomatic())
             {
-                context.PlayerStates.Firing.FireSingle();
-                context.PlayerEvents.OnSingleFireCancel.AddListener(() =>
+                if(data.Weapon.EquippedWeapon.HasAmmunition())
                 {
-                    context.PlayerEvents.OnSingleFire.RemoveAllListeners();
-                    context.ChangeStateTo(context.PlayerStates.Aiming, data);
-                });
+                    context.PlayerStates.Firing.FireSingle();
+                    context.PlayerEvents.OnSingleFireCancel.AddListener(() =>
+                    {
+                        context.PlayerEvents.OnSingleFire.RemoveAllListeners();
+                        context.ChangeStateTo(context.PlayerStates.Aiming, data);
+                    });
+                } else
+                {
+                    context.PlayerStates.Firing.FireSingle();
+                }
             }
 
             context.PlayerEvents.OnJump.RemoveAllListeners();
