@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Ziumper.Shooter.Weapons;
 
 namespace Ziumper.Shooter
 {
@@ -11,8 +12,9 @@ namespace Ziumper.Shooter
         {
             base.EnterState(context, data);
         
-            if(!data.EquippedWeapon.IsAutomatic()) 
+            if(!data.Weapon.EquippedWeapon.IsAutomatic()) 
             {
+                data.CameraRecoil.RecoilShot(data.Weapon.EquippedWeaponSettings.DefaultRecoil);
                 FireSingle();
 
                 context.PlayerEvents.OnSingleFireCancel.AddListener(() => 
@@ -38,10 +40,11 @@ namespace Ziumper.Shooter
                 data.Move.CurrentSpeed = data.SpeedWalking;   
             }
 
-            if(data.EquippedWeapon.IsAutomatic())
+            if(data.Weapon.EquippedWeapon.IsAutomatic())
             {
                 if (data.Input.IsHoldingButtonFire)
                 {
+                    data.CameraRecoil.RecoilShot(data.Weapon.EquippedWeaponSettings.DefaultRecoil);
                     FireSingle();
                 }
                 else
@@ -53,7 +56,8 @@ namespace Ziumper.Shooter
 
         public void FireSingle()
         {
-            if (data.EquippedWeapon.HasAmmunition())
+           
+            if (data.Weapon.EquippedWeapon.HasAmmunition())
             {
                 if (HasFireRatePassed())
                 {
@@ -71,9 +75,9 @@ namespace Ziumper.Shooter
         public void Fire()
         {
             //Save the shot time, so we can calculate the fire rate correctly.
-            data.LastShotTime = Time.time;
+            data.Weapon.LastShotTime = Time.time;
             //Fire the weapon! Make sure that we also pass the scope's spread multiplier if we're aiming.
-            data.EquippedWeapon.Fire();
+            data.Weapon.EquippedWeapon.Fire();
 
             //Play firing animation.
             data.CharacterAnimator.CrossFade(fireStateName, 0.05f, data.LayerOverlay, 0);
@@ -91,7 +95,7 @@ namespace Ziumper.Shooter
 			 * Save Time. Even though we're not actually firing, we still need this for the fire rate between
 			 * empty shots.
 			 */
-            data.LastShotTime = Time.time;
+            data.Weapon.LastShotTime = Time.time;
             //Play.
             data.CharacterAnimator.CrossFade(fireEmptyStateName, 0.05f, data.LayerOverlay, 0);
         }
@@ -99,26 +103,27 @@ namespace Ziumper.Shooter
         public void RefreshWeaponSetup()
         {
             //Make sure we have a weapon. We don't want errors!
-            if ((data.EquippedWeapon = data.Inventory.GetEquipped()) == null)
+            if ((data.Weapon.EquippedWeapon = data.Inventory.GetEquipped()) == null)
                 return;
 
             //Update Animator Controller. We do this to update all animations to a specific weapon's set.
-            data.CharacterAnimator.runtimeAnimatorController = data.EquippedWeapon.GetAnimatorController();
+            data.CharacterAnimator.runtimeAnimatorController = data.Weapon.EquippedWeapon.GetAnimatorController();
 
             //Get the attachment manager so we can use it to get all the attachments!
-            data.WeaponAttachmentManager = data.EquippedWeapon.GetAttachmentManager();
-            if (data.WeaponAttachmentManager == null)
+            data.Weapon.WeaponAttachmentManager = data.Weapon.EquippedWeapon.GetAttachmentManager();
+            if (data.Weapon.WeaponAttachmentManager == null)
                 return;
 
             //Get equipped scope. We need this one for its settings!
-            data.EquippedWeaponScope = data.WeaponAttachmentManager.GetEquippedScope();
+            data.Weapon.EquippedWeaponScope = data.Weapon.WeaponAttachmentManager.GetEquippedScope();
             //Get equipped magazine. We need this one for its settings!
-            data.EquippedWeaponMagazine = data.WeaponAttachmentManager.GetEquippedMagazine();
+            data.Weapon.EquippedWeaponMagazine = data.Weapon.WeaponAttachmentManager.GetEquippedMagazine();
+            data.Weapon.EquippedWeaponSettings = data.Weapon.EquippedWeapon.GetComponent<WeaponSettings>();
         }
 
         private bool HasFireRatePassed()
         {
-            return Time.time - data.LastShotTime > 60.0f / data.EquippedWeapon.GetRateOfFire();
+            return Time.time - data.Weapon.LastShotTime > 60.0f / data.Weapon.EquippedWeapon.GetRateOfFire();
         }
     }
 

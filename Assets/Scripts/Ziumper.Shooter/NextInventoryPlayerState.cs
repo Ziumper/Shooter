@@ -30,7 +30,7 @@ namespace Ziumper.Shooter
             //Make sure we're allowed to change, and also that we're not using the same index, otherwise weird things happen!
             if ((indexCurrent != indexNext))
             {
-                data.NextWeaponIndex = indexNext;
+                data.Weapon.NextWeaponIndex = indexNext;
                 context.ChangeStateTo(context.PlayerStates.NextWeapon, data);
             }
         }
@@ -48,7 +48,7 @@ namespace Ziumper.Shooter
 
             data.CharacterAnimator.Play("Unholster", data.LayerHolster, 0);
 
-            data.Inventory.Equip(data.NextWeaponIndex);
+            data.Inventory.Equip(data.Weapon.NextWeaponIndex);
             context.PlayerStates.Firing.RefreshWeaponSetup();
         }
         

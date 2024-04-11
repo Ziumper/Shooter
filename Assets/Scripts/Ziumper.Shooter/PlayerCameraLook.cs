@@ -84,6 +84,9 @@ namespace Ziumper.Shooter
             {
                 //Interpolate local rotation.
                 localRotation = Quaternion.Slerp(localRotation, rotationCamera, Time.deltaTime * interpolationSpeed);
+                
+                localRotation = Clamp(localRotation);
+
                 //Interpolate character rotation.
                 player.transform.rotation = Quaternion.Slerp(player.transform.rotation, rotationCharacter, Time.deltaTime * interpolationSpeed);
             }
@@ -126,6 +129,12 @@ namespace Ziumper.Shooter
             //Return.
             return rotation;
         }
+
+        public bool IsInClamp(float angle)
+        {
+            return angle > yClamp.x && angle < yClamp.y;        }
+
+
 
         #endregion
     }

@@ -5,7 +5,7 @@
         public override void EnterState(PlayerStateManager context, PlayerData data)
         {
             base.EnterState(context, data);
-            if (!data.EquippedWeapon.IsAutomatic())
+            if (!data.Weapon.EquippedWeapon.IsAutomatic())
             {
                 context.PlayerStates.Firing.FireSingle();
                 context.PlayerEvents.OnSingleFireCancel.AddListener(() =>
@@ -25,7 +25,7 @@
                 data.Move.CurrentSpeed = data.SpeedWalking;
             }
 
-            if(data.EquippedWeapon.IsAutomatic())
+            if(data.Weapon.EquippedWeapon.IsAutomatic())
             {
                 if (data.Input.IsHoldingButtonFire && data.Input.IsHoldingButtonAim)
                 {

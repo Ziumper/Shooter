@@ -9,12 +9,12 @@ namespace Ziumper.Shooter
             base.EnterState(context, data);
 
             //Get the name of the animation state to play, which depends on weapon settings, and ammunition!
-            string stateName = data.EquippedWeapon.HasAmmunition() ? "Reload" : "Reload Empty";
+            string stateName = data.Weapon.EquippedWeapon.HasAmmunition() ? "Reload" : "Reload Empty";
             //Play the animation state!
             data.CharacterAnimator.Play(stateName, data.LayerActions, 0.0f);
 
             //Reload.
-            data.EquippedWeapon.Reload();
+            data.Weapon.EquippedWeapon.Reload();
             context.PlayerEvents.OnReloadEnd.AddListener(OnReloadEnd);
         }
 

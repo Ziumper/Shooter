@@ -1,6 +1,7 @@
 ﻿using InfimaGames.LowPolyShooterPack;
 using System;
 using UnityEngine;
+using Ziumper.Shooter.Weapons;
 
 namespace Ziumper.Shooter
 {
@@ -25,13 +26,28 @@ namespace Ziumper.Shooter
             public Vector3 JumpingVelocity;
         }
 
+        public class WeaponData
+        {
+            public int NextWeaponIndex;
+            public float LastShotTime;
+            //Weapon data
+            public WeaponBehaviour EquippedWeapon;
+            public CameraRecoil CameraRecoil;
+            public WeaponAttachmentManagerBehaviour WeaponAttachmentManager;
+            public ScopeBehaviour EquippedWeaponScope;
+            public MagazineBehaviour EquippedWeaponMagazine;
+            public WeaponSettings EquippedWeaponSettings;
+        }
+
         public InputData Input;
         public MovingData Move;
+        public WeaponData Weapon;
 
         public PlayerData()
         {
             Input = new InputData();
             Move = new MovingData();
+            Weapon = new WeaponData();
         }
 
         [Header("Inventory")]
@@ -79,12 +95,7 @@ namespace Ziumper.Shooter
         public CharacterKinematics CharacterKinematics { get; set; }
 
         //Weapon data
-        public WeaponBehaviour EquippedWeapon { get; set; }
-        public WeaponAttachmentManagerBehaviour WeaponAttachmentManager { get; set; }
-        public ScopeBehaviour EquippedWeaponScope { get; set; }
-        public MagazineBehaviour EquippedWeaponMagazine { get; set; }
-        public float LastShotTime { get; set; }
-        public int NextWeaponIndex { get; set; }
+        public CameraRecoil CameraRecoil { get; set; }
 
         public bool IsGrounded { get; set; }
         public bool IsHolstered { get; set; }

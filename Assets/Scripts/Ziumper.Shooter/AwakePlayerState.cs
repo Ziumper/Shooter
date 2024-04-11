@@ -11,7 +11,7 @@ namespace Ziumper.Shooter
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
             data.CursorsLocked = true;
-
+            data.CameraRecoil = context.GetComponentInChildren<CameraRecoil>();
             data.CharacterKinematics = context.gameObject.GetComponent<CharacterKinematics>();
             data.Inventory.Init();
 

@@ -240,7 +240,7 @@ namespace Ziumper.Shooter
         public override void EjectCasing()
         {
             //Notify the weapon.
-            if (data.EquippedWeapon != null)
+            if (data.Weapon.EquippedWeapon != null)
             {
                 stateManager.PlayerEvents.OnEjectCasing.Invoke();
             }
@@ -249,7 +249,7 @@ namespace Ziumper.Shooter
         public override void FillAmmunition(int amount)
         {
             //Notify the weapon to fill the ammunition by the amount.
-            if (data.EquippedWeapon != null)
+            if (data.Weapon.EquippedWeapon != null)
             {
                 stateManager.PlayerEvents.OnFillAmmunniton.Invoke(amount);
             }

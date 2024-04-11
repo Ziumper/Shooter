@@ -27,9 +27,9 @@ namespace Ziumper.Shooter
 
             context.PlayerEvents.OnMove.AddListener((moveVector) => data.Input.AxisMovement = data.CursorsLocked ? moveVector : default);
             context.PlayerEvents.OnLook.AddListener((lookVector) => data.Input.AxisLook = data.CursorsLocked ? lookVector : default);
-            context.PlayerEvents.OnFillAmmunniton.AddListener((amount) => data.EquippedWeapon.FillAmmunition(amount));
-            context.PlayerEvents.OnSetActiveMagazine.AddListener((active) => data.EquippedWeaponMagazine.gameObject.SetActive(active != 0));
-            context.PlayerEvents.OnEjectCasing.AddListener(() => data.EquippedWeapon.EjectCasing());
+            context.PlayerEvents.OnFillAmmunniton.AddListener((amount) => data.Weapon.EquippedWeapon.FillAmmunition(amount));
+            context.PlayerEvents.OnSetActiveMagazine.AddListener((active) => data.Weapon.EquippedWeaponMagazine.gameObject.SetActive(active != 0));
+            context.PlayerEvents.OnEjectCasing.AddListener(() => data.Weapon.EquippedWeapon.EjectCasing());
 
             context.ChangeStateTo(context.PlayerStates.Default, data);
         }

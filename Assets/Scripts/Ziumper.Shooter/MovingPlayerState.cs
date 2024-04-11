@@ -119,11 +119,11 @@ namespace Ziumper.Shooter
         public override void LateUpdate()
         {
             //We need a weapon for this!
-            if (data.EquippedWeapon == null)
+            if (data.Weapon.EquippedWeapon == null)
                 return;
 
             //Weapons without a scope should not be a thing! Ironsights are a scope too!
-            if (data.EquippedWeaponScope == null)
+            if (data.Weapon.EquippedWeaponScope == null)
                 return;
 
             //Make sure that we have a kinematics component!
